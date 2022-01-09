@@ -1,19 +1,20 @@
 #include "../includes/minishell.h"
 
-int	main()
+int	main(void)
 {
-	// char *line = readline(NULL);
-	// while (line)
-	// {
-	// 	printf("%s\n", line);
-	// 	free (line);
-	// 	line = readline(NULL);
-	// }
+	t_mini	mini;
+
+	char *line = readline("minishell$ ");
+	while (line)
+	{
+		// printf("%s\n", line);
+		parser(line, &mini);
+		free (line);
+		line = readline("minishell$ ");
+		// add_history(line);
+	}
 	// free (line);
 	// printf("%s\n", getenv("PATH"));
-	
-
-
 
 	return (0);
 }

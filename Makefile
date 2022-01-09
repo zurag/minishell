@@ -1,15 +1,14 @@
 NAME		= minishell
 CC			= gcc
 RM			= rm -f
-DEBUG		= 1
 
-CFLAGS		= -Wall -Wextra -Werror -MMD $(DEBUG_FLAGS)
+CFLAGS		= -Wall -Wextra -Werror -MMD
 
 CPPFLAGS	= $(CFLAGS) -march=native -O2 -pipe
 
 HEADERS		= includes/
 
-SRCS =	srcs/main.c
+SRCS =	srcs/main.c srcs/parser.c
 
 OBJS = $(SRCS:.c=.o)
 
