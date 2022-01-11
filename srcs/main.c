@@ -12,7 +12,7 @@ int	main(void)
 		line = readline(getcwd(cwd, sizeof(cwd)));
 		printf("%s\n", line);
 		// parser(line, &mini);
-		// add_history(line);
+		add_history(line);
 		// execute();
 		free (line);
 		
