@@ -4,3 +4,4 @@
 *.d
 minishell
 libft.a
+./build/

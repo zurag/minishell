@@ -1,37 +1,49 @@
 NAME		= minishell
+
 CC			= gcc
-RM			= rm -f
+RM			= rm -rf
 
-CFLAGS		= -Wall -Wextra -Werror -MMD
+CFLAGS		= -Wall -Wextra -Werror -MMD -march=native -O2 -pipe
 
-CPPFLAGS	= $(CFLAGS) -march=native -O2 -pipe
+# Project builds and dirs
+SRCDIR = ./srcs/
+SRCNAMES = $(shell ls $(SRCDIR) | grep -E ".+\.c")
+SRC = $(addprefix $(SRCDIR), $(SRCNAMES))
+INC = ./includes/
+BUILDDIR = ./build/
+BUILDOBJS = $(addprefix $(BUILDDIR), $(SRCNAMES:.c=.o))
 
-HEADERS		= includes/
+# Libft builds and dirs
+LIBDIR = ./libft/
+LIBFT = ./libft/libft.a
+LIBINC = ./libft/includes/
 
-SRCS =	srcs/main.c srcs/parser.c
+all: $(BUILDDIR) $(LIBFT) $(NAME)
 
-OBJS = $(SRCS:.c=.o)
+# Object dir rule
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
-$(NAME):		$(OBJS)
-				cd libft && $(MAKE) && mv libft.a ../libft.a
-				$(CC) $(CPPFLAGS) -I $(HEADERS) $(OBJS) libft.a -lreadline -ltermcap -o $(NAME)
+# Objects rule
+$(BUILDDIR)%.o:$(SRCDIR)%.c
+	$(CC) $(CFLAGS) -I$(LIBINC) -I$(INC) -o $@ -c $<
 
-all:			$(NAME)
+# Project file rule
+$(NAME): $(BUILDOBJS)
+	$(CC) $(CFLAGS) $(BUILDOBJS) $(LIBFT) -lreadline -ltermcap -o $(NAME)
 
-.c.o:
-				$(CC) $(CPPFLAGS) -I $(HEADERS) -o $@ -c $<
-
-$(OBJS):		$(HEADERS)
+# Libft rule
+$(LIBFT):
+	make -C $(LIBDIR)
 
 clean:
-				$(RM) $(OBJS)
-				$(RM) $(OBJS:.o=.d)
+	$(RM) $(BUILDDIR)
+	make -C $(LIBDIR) clean
 
-fclean:			clean
-				cd libft && $(MAKE) clean
-				$(RM) libft.a
-				$(RM) $(NAME)
+fclean: clean
+	$(RM) $(NAME)
+	make -C $(LIBDIR) fclean
 
-re:				fclean all
+re: fclean all
 
-.PHONY:			all clean fclean re
+.PHONY: all clean fclean re

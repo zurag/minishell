@@ -1,20 +1,24 @@
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	main(void)
 {
 	// t_mini	mini;
-
-	char *line = readline("minishell$ ");
-	while (line)
+	char	*line;
+	char	cwd[PATH_MAX];
+	
+	
+	while (1)
 	{
+		line = readline(getcwd(cwd, sizeof(cwd)));
 		printf("%s\n", line);
 		// parser(line, &mini);
-		free (line);
-		line = readline("minishell$ ");
 		// add_history(line);
+		// execute();
+		free (line);
+		
+		add_history(line);
 	}
-	free (line);
+	// free (line);
 	printf("%s\n", getenv("PATH"));
-	add_history(line);
 	return (0);
 }
