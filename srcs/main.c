@@ -9,7 +9,6 @@ int	main(void)
 	{
 		// printf("%s\n", line);
 		parser(line, &mini);
-		free (line);
 		line = readline("minishell$ ");
 		// add_history(line);
 	}
