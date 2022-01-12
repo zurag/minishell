@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+         #
+#    By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/20 13:07:25 by zurag             #+#    #+#              #
-#    Updated: 2022/01/11 23:03:15 by dtentaco         ###   ########.fr        #
+#    Updated: 2022/01/12 02:35:23 by dtentaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ $(OBJ): $(FILES)
 
 clean:
 	rm -f $(OBJ)
+	rm -f *.d
 
 fclean: clean
 	rm -f $(NAME)

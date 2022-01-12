@@ -34,8 +34,8 @@ typedef struct	s_mini{
 }				t_mini;
 
 
-int	parser(char *line, t_mini *mini);
-
+int		parser(char *line, t_mini *mini);
+void	print_prompt_msg(void);
 
 
 #endif
