@@ -18,9 +18,17 @@ static int pre_parse(char *line)
 				return (-1);
 		}
 		if (*line == '|')
+		{
 			count_cmd++;
-		line++;
+			line++;
+			if (*line == '|')
+				return (-1);
+		}
+		else
+			line++;
 	}
+	if (*(line - 1) == '|' || *(line - 1) == '<' || *(line - 1) == '>')
+		return (-1);
 	return (count_cmd);
 }
 
@@ -34,7 +42,6 @@ static int	is_end(int c)
 		return (0);
 	return (1);
 }
-
 
 int	put_in_mid_line(char **line, char *str, int start, int end)
 {
@@ -66,6 +73,8 @@ static int	dollar(char **line, int start) // не обрабатывает $?
 		i++;
 	tmp = ft_substr(*line, start + 1, i);
 	str = getenv(tmp);
+	if (!str)
+		return (-1);
 	free(tmp);
 	put_in_mid_line(line, str, start, start + i);
 	return (1);
@@ -94,11 +103,9 @@ static int del_quotes(char **line, int start)
 	return (end - 2);
 }
 
-char	*parse_line(char *line, t_cmd *cmd)
+char	*parse_line(char *line)
 {
 	int i;
-	// char *tmp;
-	(void)cmd;
 
 	i = 0;
 	while (line[i])
@@ -120,9 +127,54 @@ char	*parse_line(char *line, t_cmd *cmd)
 	return (line);
 }
 
+
+
+int	len_token(char *line)
+{
+	int	len;
+
+	len = 0;
+	while (*line)
+	{
+		if (*line == ' ' || *line == '\t')
+			break;
+		if (*line == '<' || *line == '>')
+			break;
+		if (*line == '\"' || *line == '\'')
+			break ;
+		if (*line == '|')
+			break ;
+		len++;
+		line++;
+	}
+	return (len);
+}
+
+int	parse_cmd(char *line, t_cmd *cmd, t_list *token)
+{	
+	int		len;
+	int		i;
+	char	*tmp;
+
+	len = 0;
+	i = 0;
+	while (line[i])
+	{
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		len = len_token(line + i);
+		tmp = ft_substr(line, i, len);
+		ft_lstadd_back(&token, ft_lstnew(tmp));
+		i += len;
+	}
+	return (0);
+}
+
 int	parser(char *line, t_mini *mini)
 {
-	// char *tmp;
+	t_list *tokens;
+
+	tokens = NULL;
 	mini->count_cmd = pre_parse(line);
 	if (mini->count_cmd == -1)
 	{
@@ -132,7 +184,7 @@ int	parser(char *line, t_mini *mini)
 	mini->cmd = malloc(sizeof(t_cmd) * mini->count_cmd);
 	if (!mini->count_cmd)
 		return (1);
-	line = parse_line(line, mini->cmd);
+	line = parse_line(line);
 	printf("final line === %s\n", line);
 	return (0);
 }

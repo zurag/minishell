@@ -7,10 +7,12 @@ int	main(void)
 	char *line = readline("minishell$ ");
 	while (line)
 	{
-		// printf("%s\n", line);
-		parser(line, &mini);
-		line = readline("minishell$ ");
+		printf("%s\n", line);
 		// add_history(line);
+		parser(line, &mini);
+		// free (line);
+		line = readline("minishell$ ");
+
 	}
 	// free (line);
 	// printf("%s\n", getenv("PATH"));
