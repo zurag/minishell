@@ -3,19 +3,21 @@
 int	main(void)
 {
 	// t_mini	mini;
-	char	*line;
+	char		*line;
+	t_list		**ls_env = NULL;
+	extern char	**environ;
 
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	ft_init_env(ls_env, environ);
 	while (1)
 	{
-		print_prompt_msg();
-		line = readline(":");
-		printf("%s\n", line);
+		line = readline("minishell>");
+		if (line && *line)
+			add_history(line);
 		// parser(line, &mini);
-		add_history(line);
 		// execute();
 		free (line);
-
-		add_history(line);
 	}
 	// free (line);
 	printf("%s\n", getenv("PATH"));

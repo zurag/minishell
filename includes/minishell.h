@@ -33,9 +33,13 @@ typedef struct	s_mini{
 	int		count_cmd;
 }				t_mini;
 
+typedef struct	s_env
+{
+	char	*name;
+	char	*value;
+}				t_env;
 
 int		parser(char *line, t_mini *mini);
-void	print_prompt_msg(void);
-
-
+void	signal_handler(int signo);
+int		ft_init_env(t_list **ehead, char **env);
 #endif
