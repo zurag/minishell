@@ -7,7 +7,7 @@ int	main(void)
 	char *line = readline("minishell$ ");
 	while (line)
 	{
-		printf("%s\n", line);
+		// printf("%s\n", line);
 		// add_history(line);
 		parser(line, &mini);
 		// free (line);

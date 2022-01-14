@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static int pre_parse(char *line)
+static int pre_parse(char *line) //добавить проверку ><
 {
 	char	quotes;
 	int		count_cmd;
@@ -67,7 +67,7 @@ static int	dollar(char **line, int start) // не обрабатывает $?
 	int		i;
 	char	*str;
 	char	*tmp;
-	
+
 	i = 0;
 	while ((*line)[start + i + 1] && !(is_end((*line)[start + i + 1])))
 		i++;
@@ -127,47 +127,82 @@ char	*parse_line(char *line)
 	return (line);
 }
 
+void	print_token(t_list *lst)
+{
+	while(lst)
+	{
+		// printf("HERE\n");
+		printf("token == %s\n", (char *)lst->content);
+		lst = lst->next;
+	}
+}
 
 
-int	len_token(char *line)
+
+int	len_quotes(char *line, int i)
+{
+	char	quotes;
+	int		len;
+
+	len = 0;
+	quotes = line[i];
+	len++;
+	while (line[i + len] != quotes)
+		len++;
+	return (len + 1);
+}
+
+
+int	len_token(char *line, int i)
 {
 	int	len;
 
 	len = 0;
-	while (*line)
+	if (line[i] == '<' || line[i] == '>')
 	{
-		if (*line == ' ' || *line == '\t')
-			break;
-		if (*line == '<' || *line == '>')
-			break;
-		if (*line == '\"' || *line == '\'')
-			break ;
-		if (*line == '|')
-			break ;
+		i++;
+		if (line[i] == '<' || line[i] == '>')
+			return (2);
+		return (1);
+	}
+	if (line[i] == '|')
+		return (1);
+	if (line[i] == '\"' || line[i] == '\'')
+		return(len_quotes(line, i));
+	while (line[i + len])
+	{
+		if (line[i + len] == ' ' || line[i + len] == '\t')
+			return (len);
+		if (line[i + len] == '<' || line[i + len] == '>')
+			return (len);
+		if (line[i + len] == '|')
+			return (len);
 		len++;
-		line++;
 	}
 	return (len);
 }
 
-int	parse_cmd(char *line, t_cmd *cmd, t_list *token)
-{	
+t_list	*get_tokens(char *line, t_cmd *cmd, t_list *token)
+{
 	int		len;
 	int		i;
 	char	*tmp;
 
+	(void)cmd;
 	len = 0;
 	i = 0;
 	while (line[i])
 	{
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
-		len = len_token(line + i);
+		len = len_token(line, i);
 		tmp = ft_substr(line, i, len);
+		printf("tmp == %s\n", tmp);
 		ft_lstadd_back(&token, ft_lstnew(tmp));
+		// printf("HERE\n");
 		i += len;
 	}
-	return (0);
+	return (token);
 }
 
 int	parser(char *line, t_mini *mini)
@@ -184,7 +219,9 @@ int	parser(char *line, t_mini *mini)
 	mini->cmd = malloc(sizeof(t_cmd) * mini->count_cmd);
 	if (!mini->count_cmd)
 		return (1);
-	line = parse_line(line);
-	printf("final line === %s\n", line);
+	// line = parse_line(line);
+	// printf("final line === %s\n", line);
+	tokens = get_tokens(line, mini->cmd, tokens);
+	print_token(tokens);
 	return (0);
 }
