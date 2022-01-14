@@ -19,10 +19,10 @@ LIBFT = ./libft/libft.a
 LIBINC = ./libft/includes/
 
 # Lib readline
-READLINE_INC = /usr/local/opt/readline/include
-READLINE_LIB = /usr/local/opt/readline/lib
-# READLINE_INC = ~/.brew/opt/readline/include
-# READLINE_LIB = ~/.brew/opt/readline/lib
+# READLINE_INC = /usr/local/opt/readline/include
+# READLINE_LIB = /usr/local/opt/readline/lib
+READLINE_INC = ~/.brew/opt/readline/include
+READLINE_LIB = ~/.brew/opt/readline/lib
 
 all: $(BUILDDIR) $(LIBFT) $(NAME)
 
