@@ -3,8 +3,7 @@ NAME		= minishell
 CC			= gcc
 RM			= rm -rf
 
-CFLAGS		= -Wall -Wextra -Werror -I $(READLINE_INC)
-# -MMD -march=native -O2 -pipe
+CFLAGS		= -Wall -Wextra -Werror -I $(READLINE_INC) -MMD -march=native -O2 -pipe -g
 
 # Project builds and dirs
 SRCDIR = ./srcs/
@@ -22,6 +21,8 @@ LIBINC = ./libft/includes/
 # Lib readline
 READLINE_INC = /usr/local/opt/readline/include
 READLINE_LIB = /usr/local/opt/readline/lib
+# READLINE_INC = ~/.brew/opt/readline/include
+# READLINE_LIB = ~/.brew/opt/readline/lib
 
 all: $(BUILDDIR) $(LIBFT) $(NAME)
 
@@ -35,7 +36,7 @@ $(BUILDDIR)%.o:$(SRCDIR)%.c
 
 # Project file rule
 $(NAME): $(BUILDOBJS)
-	$(CC) $(CFLAGS) $(BUILDOBJS) $(LIBFT) -lreadline -ltermcap -I$(INC) -I$(READLINE_INC) -L$(READLINE_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(BUILDOBJS) $(LIBFT) -lreadline -ltermcap -I $(INC) -I $(READLINE_INC) -L $(READLINE_LIB) -o $(NAME)
 
 # Libft rule
 $(LIBFT):
