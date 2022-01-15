@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 20:17:46 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/15 17:25:34 by dtentaco         ###   ########.fr       */
+/*   Created: 2022/01/15 16:45:00 by dtentaco          #+#    #+#             */
+/*   Updated: 2022/01/15 16:52:57 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_input_signals(void)
+int	ft_print_error(t_list **is_head, const char *str, int nbr)
 {
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-}
+	char	*name;
 
-void	signal_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	if (signo == SIGQUIT)
-	{
-		printf("%c[2K", 27);
-		rl_on_new_line();
-		rl_redisplay();
-		printf("Quit: 3\n");
-		exit(0);
-	}
+	if (str)
+		perror(str);
+	if (nbr < 0)
+		nbr = EXIT_FAILURE;
+	name = ft_itoa(nbr);
+	ft_putenv(is_head, "?", name);
+	free(name);
+	return (nbr);
 }

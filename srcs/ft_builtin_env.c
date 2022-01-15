@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_builtin_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 20:17:46 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/15 17:25:34 by dtentaco         ###   ########.fr       */
+/*   Created: 2022/01/15 16:36:37 by dtentaco          #+#    #+#             */
+/*   Updated: 2022/01/15 16:44:09 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_input_signals(void)
+void	ft_read_lst(void *lst)
 {
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	t_env	*ls_env_node;
+
+	ls_env_node = (t_env *)(lst);
+	if (ls_env_node->name)
+		printf("%s=", ls_env_node->name);
+	if (ls_env_node->value)
+		printf("%s;\n", ls_env_node->value);
 }
 
-void	signal_handler(int signo)
+int	ft_builtin_env(t_list **is_head_env)
 {
-	if (signo == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	if (signo == SIGQUIT)
-	{
-		printf("%c[2K", 27);
-		rl_on_new_line();
-		rl_redisplay();
-		printf("Quit: 3\n");
-		exit(0);
-	}
+	if (!is_head_env)
+		return (1);
+	ft_lstiter(*is_head_env, &ft_read_lst);
+	ft_print_error(is_head_env, NULL, 0);
+	return (0);
 }
