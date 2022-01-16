@@ -3,33 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_environ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 00:13:06 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/15 17:17:23 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/16 20:46:23 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_add2list(t_list **is_head_env, char *i_str)
+t_list	*ft_add2list(t_list *is_head_env, char *i_str)
 {
 	t_env	*ls_content;
 	char	**ls_val_env;
-	t_list	*ls_new_node;
 
 	ls_content = malloc(sizeof(t_env));
-	if (!is_head_env || !i_str || !ls_content)
-		return (1);
+	if (!i_str || !ls_content)
+		return (NULL);
 	ls_val_env = ft_split(i_str, '=');
 	if (!ls_val_env)
-		return (1);
+		return (NULL);
 	ls_content->name = ls_val_env[0];
 	ls_content->value = ls_val_env[1];
-	ls_new_node = ft_lstnew(ls_content);
-	ft_lstadd_back(is_head_env, ls_new_node);
-	free(ls_val_env);
-	return (0);
+	ft_lstadd_back(&is_head_env, ft_lstnew(ls_content));
+	// free(ls_val_env);
+	return (is_head_env);
 }
 
 int	ft_insnewlst(t_list **is_head, char *name, char *val)
@@ -92,26 +90,19 @@ char	*ft_getenv(t_list *is_head, char *i_str)
 	return (NULL);
 }
 
-t_list	**ft_init_env(char **env)
+t_list	*ft_init_env(char **env)
 {
-	int		err;
 	int		i;
-	t_list	**ls_head_env;
+	t_list	*ls_head_env;
 
-	err = 0;
 	i = 0;
-	ls_head_env = (t_list **)malloc(sizeof(t_list *));
-	if (!ls_head_env)
+	ls_head_env = NULL;
+	while (env && env[i])
+		ls_head_env = ft_add2list(ls_head_env, env[i++]);
+	if (!ls_head_env || !i)
 	{
-		ft_print_error(ls_head_env, "Malloc returns error", 0);
-		return (NULL);
-	}
-	while (!err && env && env[i])
-		err = ft_add2list(ls_head_env, env[i++]);
-	if (err != 0 || !i)
-	{
-		ft_print_error(ls_head_env, "Raised error in adding env's node to list", 0);
-		ft_free_env(ls_head_env);
+		ft_print_error(&ls_head_env, "Raised error in adding env's node to list", 0);
+		ft_free_env(&ls_head_env);
 		return (NULL);
 	}
 	return (ls_head_env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/16 15:57:07 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/16 20:45:47 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	main(void)
 {
-	t_list		**ls_head_env;
+	t_list		*ls_head_env;
 	extern char	**environ;
 
 	ls_head_env = ft_init_env(environ);
 	if (!ls_head_env)
 		return(0);
-	ft_putenv(ls_head_env, "?", "0");
-	ft_run_prompt(ls_head_env);
+	ft_putenv(&ls_head_env, "?", "0");
+	ft_run_prompt(&ls_head_env);
 	return (0);
 }
 

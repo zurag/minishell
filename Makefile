@@ -3,7 +3,7 @@ NAME		= minishell
 CC			= gcc
 RM			= rm -rf
 
-CFLAGS		= -Wall -Wextra -Werror -I $(READLINE_INC) -MMD -march=native -O2 -pipe -g
+CFLAGS		= -Wall -Wextra -Werror -I $(READLINE_INC) -MMD -march=native -O2 -pipe -g -fsanitize=address
 
 # Project builds and dirs
 SRCDIR = ./srcs/
@@ -19,10 +19,10 @@ LIBFT = ./libft/libft.a
 LIBINC = ./libft/includes/
 
 # Lib readline
-READLINE_INC = /usr/local/opt/readline/include
-READLINE_LIB = /usr/local/opt/readline/lib
-# READLINE_INC = ~/.brew/opt/readline/include
-# READLINE_LIB = ~/.brew/opt/readline/lib
+# READLINE_INC = /usr/local/opt/readline/include
+# READLINE_LIB = /usr/local/opt/readline/lib
+READLINE_INC = ~/.brew/opt/readline/include
+READLINE_LIB = ~/.brew/opt/readline/lib
 
 all: $(BUILDDIR) $(LIBFT) $(NAME)
 

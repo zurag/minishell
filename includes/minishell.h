@@ -46,8 +46,8 @@ void	ft_run_prompt(t_list **is_head_env);
 void	set_input_signals(void);
 void	signal_handler(int signo);
 
-t_list	**ft_init_env(char **env);
-int		ft_add2list(t_list **is_env, char *i_str);
+t_list	*ft_init_env(char **env);
+t_list	*ft_add2list(t_list *is_env, char *i_str);
 int		ft_insnewlst(t_list **is_head, char *name, char *val);
 int		ft_putenv(t_list **is_head, char *name, char *val);
 char	*ft_getenv(t_list *is_head, char *i_str);

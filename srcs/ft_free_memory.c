@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_memory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:42:44 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/16 14:19:19 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/16 20:20:36 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	ft_free_env(t_list **is_head)
 		*ls_current = ls_next;
 		i++;
 	}
+	if(*is_head != NULL)
 	free(is_head);
 }
