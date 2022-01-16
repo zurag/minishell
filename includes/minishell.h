@@ -52,8 +52,10 @@ int		ft_insnewlst(t_list **is_head, char *name, char *val);
 int		ft_putenv(t_list **is_head, char *name, char *val);
 char	*ft_getenv(t_list *is_head, char *i_str);
 void	ft_free_env(t_list **is_head);
+void	ft_delete_env(void *lst);
 
 int		ft_builtin_env(t_list **is_head_env);
 
+void	ft_exit(t_list **is_head_env);
 int		ft_print_error(t_list **is_head, const char *str, int nbr);
 #endif

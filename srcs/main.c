@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/15 17:28:37 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/16 15:57:07 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,38 @@ int	main(void)
 void	ft_run_prompt(t_list **is_head_env)
 {
 	char	*line_read;
+	// t_cmd	**ls_head_cmd;
 
 	set_input_signals();
 	ft_builtin_env(is_head_env); // test
 	while (1)
 	{
 		line_read = readline("minishell>");
-		if (line_read && *line_read)
-			add_history(line_read);
-		// parser(line_read, &mini);
-		// execute(is_head_env);
+		if (!line_read)
+		{
+			free(line_read);
+			ft_exit(is_head_env);
+		}
+		if (!ft_strlen(line_read))
+		{
+			free(line_read);
+			continue ;
+		}
+		add_history(line_read);
+		// parser(line_read, &ls_head_cmd);
+		// ft_execute(is_head_env, &ls_head_cmd);
 		free (line_read);
 	}
+}
+
+void	ft_exit(t_list **is_head_env)
+{
+	int	nbr;
+
+	nbr = ft_atoi(ft_getenv(*is_head_env, "?"));
+	if (is_head_env)
+		ft_free_env(is_head_env);
+	// if (ctt)
+	// 	ft_free_env(ctt, 1);
+	exit(nbr);
 }

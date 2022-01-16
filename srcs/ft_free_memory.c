@@ -6,13 +6,13 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:42:44 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/15 14:56:45 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/16 14:19:19 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_delentry(void *lst)
+void	ft_delete_env(void *lst)
 {
 	t_env	*ls_env_node;
 
@@ -35,7 +35,7 @@ void	ft_free_env(t_list **is_head)
 	while (*ls_current)
 	{
 		ls_next = (*ls_current)->next;
-		ft_lstdelone(*ls_current, &ft_delentry);
+		ft_lstdelone(*ls_current, &ft_delete_env);
 		*ls_current = ls_next;
 		i++;
 	}
