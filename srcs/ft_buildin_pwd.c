@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ft_buildin_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/15 16:36:37 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/16 22:29:42 by dtentaco         ###   ########.fr       */
+/*   Created: 2022/01/16 22:21:58 by dtentaco          #+#    #+#             */
+/*   Updated: 2022/01/16 22:27:10 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_read_lst(void *lst)
+void	ft_builtin_pwd(t_list **is_head_env)
 {
-	t_env	*ls_env_node;
+	char	*str;
 
-	ls_env_node = (t_env *)(lst);
-	if (ls_env_node->name)
-		printf("%s=", ls_env_node->name);
-	if (ls_env_node->value)
-		printf("%s\n", ls_env_node->value);
-}
-
-int	ft_builtin_env(t_list **is_head_env)
-{
-	if (!is_head_env)
-		return (1);
-	ft_lstiter(*is_head_env, &ft_read_lst);
+	str = ft_getenv(*is_head_env, "PWD");
+	if (str)
+		printf("%s\n", str);
 	ft_print_error(is_head_env, NULL, 0);
-	return (0);
 }

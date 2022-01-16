@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/16 20:45:47 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/16 22:30:36 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_run_prompt(t_list **is_head_env)
 
 	set_input_signals();
 	ft_builtin_env(is_head_env); // test
+	ft_builtin_pwd(is_head_env); // test
 	while (1)
 	{
 		line_read = readline("minishell>");
