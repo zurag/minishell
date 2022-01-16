@@ -2,7 +2,7 @@ NAME		= minishell
 CC			= gcc
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror -MMD -g -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -MMD -g
 
 CPPFLAGS	= $(CFLAGS) -march=native -O2 -pipe
 

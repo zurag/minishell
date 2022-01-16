@@ -1,0 +1,7 @@
+#MAIN
+*.o
+.DS_Store
+*.d
+minishell
+libft.a
+./build/

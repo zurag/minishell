@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory `/Users/zurag/CLionProjects/minishell'
+make: `minishell' is up to date.
+ 
+make: Leaving directory `/Users/zurag/CLionProjects/minishell'
+ 
