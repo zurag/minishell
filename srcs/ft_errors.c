@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/29 13:35:35 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/14 21:31:59 by dtentaco         ###   ########.fr       */
+/*   Created: 2022/01/15 16:45:00 by dtentaco          #+#    #+#             */
+/*   Updated: 2022/01/15 16:52:57 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-t_list	*ft_lstlast(t_list *lst)
+int	ft_print_error(t_list **is_head, const char *str, int nbr)
 {
-	t_list	*last;
+	char	*name;
 
-	last = lst;
-	if (lst == NULL)
-		return (NULL);
-	while (last->next != NULL)
-	{
-		last = last->next;
-	}
-	return (last);
+	if (str)
+		perror(str);
+	if (nbr < 0)
+		nbr = EXIT_FAILURE;
+	name = ft_itoa(nbr);
+	ft_putenv(is_head, "?", name);
+	free(name);
+	return (nbr);
 }

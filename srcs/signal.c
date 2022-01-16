@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/29 13:57:49 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/15 14:52:33 by dtentaco         ###   ########.fr       */
+/*   Created: 2022/01/13 20:17:46 by dtentaco          #+#    #+#             */
+/*   Updated: 2022/01/15 17:25:34 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void*))
+void	set_input_signals(void)
 {
-	if (lst)
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+}
+
+void	signal_handler(int signo)
+{
+	if (signo == SIGINT)
 	{
-		del(lst->content);
-		free(lst);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	if (signo == SIGQUIT)
+	{
+		printf("%c[2K", 27);
+		rl_on_new_line();
+		rl_redisplay();
+		printf("Quit: 3\n");
+		exit(0);
 	}
 }
