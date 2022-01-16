@@ -131,7 +131,6 @@ void	print_token(t_list *lst)
 {
 	while(lst)
 	{
-		// printf("HERE\n");
 		printf("token == %s\n", (char *)lst->content);
 		lst = lst->next;
 	}
@@ -182,13 +181,12 @@ int	len_token(char *line, int i)
 	return (len);
 }
 
-t_list	*get_tokens(char *line, t_cmd *cmd, t_list *token)
+t_list	*get_tokens(char *line, t_list *token)
 {
 	int		len;
 	int		i;
 	char	*tmp;
 
-	(void)cmd;
 	len = 0;
 	i = 0;
 	while (line[i])
@@ -197,13 +195,57 @@ t_list	*get_tokens(char *line, t_cmd *cmd, t_list *token)
 			i++;
 		len = len_token(line, i);
 		tmp = ft_substr(line, i, len);
-		printf("tmp == %s\n", tmp);
 		ft_lstadd_back(&token, ft_lstnew(tmp));
-		// printf("HERE\n");
 		i += len;
 	}
 	return (token);
 }
+
+int	ft_init_file(t_list *lst, t_cmd *cmd)
+{
+	if (!ft_strncmp(lst->content, "<", 1))
+	{
+		if (cmd->in_file)
+			close(cmd->in_file);
+		cmd->in_file = open(lst->next->content, O_RDONLY);
+	}
+	else if (!ft_strncmp(lst->content, ">", 1))
+	{
+		if (cmd->out_file)
+			close(cmd->out_file);
+		cmd->out_file = open(lst->next->content, O_TRUNC | O_CREAT, 420);
+	}
+	else if (!ft_strncmp(lst->content, "<<", 2))
+	{
+		if (cmd->in_file)
+			close(cmd->in_file);
+		cmd->in_file = open(lst->next->content, O_RDONLY); // ??? проверить
+	}
+	else if (!ft_strncmp(lst->content, ">>", 2))
+	{
+		if (cmd->in_file)
+			close(cmd->in_file);
+		cmd->out_file = open(lst->next->content, O_APPEND | O_CREAT, 420);
+	}
+	return (0);
+}
+
+
+
+int	init_cmd(t_list *lst, t_mini *mini)
+{
+	int i;
+
+	i = 0;
+	while (lst)
+	{
+		mini->cmd->cmd = parse_line(lst->content);
+
+		lst = lst->next;
+	}
+	return (0);
+}
+
 
 int	parser(char *line, t_mini *mini)
 {
@@ -221,7 +263,8 @@ int	parser(char *line, t_mini *mini)
 		return (1);
 	// line = parse_line(line);
 	// printf("final line === %s\n", line);
-	tokens = get_tokens(line, mini->cmd, tokens);
+	tokens = get_tokens(line, tokens);
 	print_token(tokens);
+
 	return (0);
 }

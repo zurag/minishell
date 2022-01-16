@@ -20,12 +20,8 @@
 typedef struct	s_cmd{
 	char	*cmd;
 	char	**arguments;
-	char	**infile;
-	char	**outfile;
-	char	*mode_in;
-	char	*mode_out;
-	int		count_infile;
-	int		count_outfile;
+	int		in_file;
+	int		out_file;
 }				t_cmd;
 
 typedef struct	s_mini{
