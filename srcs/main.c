@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/16 22:30:36 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/17 22:22:07 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,40 @@ int	main(void)
 	ft_run_prompt(&ls_head_env);
 	return (0);
 }
+/***********************************************
+ * TESTING UNSET FUNC
+ **********************************************/
+int	test_unset(t_list **is_head_env)
+{
+	char	**args;
+	int		i;
+
+	args = NULL;
+	i = 0;
+	args = malloc(sizeof(char *) * 4);
+	args[3] = NULL;
+	while (i < 3)
+	{
+		if (!(args[i] = malloc(sizeof(char) * 5)))
+			return (printf("ERROR MALLOC!\n"));
+		args[i][4] = '\0';
+		ft_memccpy(args[i], "LAN ", '\0', ft_strlen(args[i]));
+		i++;
+	}
+	ft_builtin_unset(is_head_env, args);
+	return (0);
+}
 
 void	ft_run_prompt(t_list **is_head_env)
 {
 	char	*line_read;
-	// t_cmd	**ls_head_cmd;
+	// t_mini	**ls_head_cmd;
 
 	set_input_signals();
 	ft_builtin_env(is_head_env); // test
 	ft_builtin_pwd(is_head_env); // test
+	printf("\n\nTEST UNSET\n");
+	test_unset(is_head_env);
 	while (1)
 	{
 		line_read = readline("minishell>");

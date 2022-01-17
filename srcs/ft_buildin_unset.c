@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_buildin_unset.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:48:25 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/17 00:08:46 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/17 23:15:55 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,20 @@ static int	ft_is_valid_token_unset(char *s)
 	return (1);
 }
 
-void	ft_buildin_unset(t_list **is_head_env, t_mini *is_data)
+void	ft_builtin_unset(t_list **is_head_env, char **i_args)
 {
 	int	i;
 
-	if (!is_data)
+	if (!i_args)
 		return ;
-	i = 0;
-	while (i < is_data->count_cmd)
+	i = 1;
+	while (i_args[i])
 	{
-		if (ft_is_valid_token_unset(is_data->cmd[i].cmd))
-			ft_unset_var_env(is_head_env, is_data->cmd[i].cmd);
+		if (ft_is_valid_token_unset(i_args[i]))
+			ft_unset_var_env(is_head_env, i_args[i]);
 		else
 		{
-			printf("unset : \'%s\': not a valid", is_data->cmd[i].cmd);
-			printf(" identifier\n");
+			printf("unset : \'%s\': not a valid identifier\n", i_args[i]);
 			ft_print_error(is_head_env, NULL, 1);
 			break ;
 		}
