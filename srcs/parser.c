@@ -6,8 +6,11 @@ static int pre_parse(char *line) //добавить проверку ><
 	int		count_cmd;
 
 	count_cmd = 1;
-	if(!*line)
+	if (!*line)
+	{
+		free(line);
 		return (0);
+	}
 	while (*line)
 	{
 		if (*line == '\'' || *line == '\"')
@@ -39,7 +42,7 @@ static int	is_end(int c)
 	if (c == '_')
 		return (0);
 	if (ft_isalpha(c))
-		return(0);
+		return (0);
 	if (ft_isdigit(c))
 		return (0);
 	return (1);
@@ -82,7 +85,7 @@ static int	dollar(char **line, int start) // не обрабатывает $?
 	return (1);
 }
 
-static int del_quotes(char **line, int start)
+static	int	del_quotes(char **line, int start)
 {
 	char	quotes;
 	char	*mid;
@@ -107,7 +110,7 @@ static int del_quotes(char **line, int start)
 
 char	*parse_line(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
@@ -131,14 +134,12 @@ char	*parse_line(char *line)
 
 void	print_token(t_list *lst)
 {
-	while(lst)
+	while (lst)
 	{
 		printf("token == %s\n", (char *)lst->content);
 		lst = lst->next;
 	}
 }
-
-
 
 int	len_quotes(char *line, int i)
 {
@@ -152,7 +153,6 @@ int	len_quotes(char *line, int i)
 		len++;
 	return (len + 1);
 }
-
 
 int	len_token(char *line, int i)
 {
@@ -169,7 +169,7 @@ int	len_token(char *line, int i)
 	if (line[i] == '|')
 		return (1);
 	if (line[i] == '\"' || line[i] == '\'')
-		return(len_quotes(line, i));
+		return (len_quotes(line, i));
 	while (line[i + len])
 	{
 		if (line[i + len] == ' ' || line[i + len] == '\t')
@@ -199,41 +199,42 @@ t_list	*get_tokens(char *line, t_list *token)
 		tmp = ft_substr(line, i, len);
 		ft_lstadd_back(&token, ft_lstnew(tmp));
 		i += len;
-		
 	}
 	return (token);
 }
 
-int	ft_init_file(t_list *lst, t_cmd cmd)
+int	ft_init_file(t_list *lst, t_cmd *cmd)
 {
+	char	*file;
+
+	lst->next->content = parse_line(lst->next->content);
+	file = lst->next->content;
 	if (!ft_strncmp(lst->content, "<", 1))
 	{
-		if (cmd.in_file)
-			close(cmd.in_file);
-		cmd.in_file = open(parse_line(lst->next->content), O_RDONLY);
+		if (cmd->in_file)
+			close(cmd->in_file);
+		return (cmd->in_file = open(file, O_RDONLY));
 	}
 	else if (!ft_strncmp(lst->content, ">", 1))
 	{
-		if (cmd.out_file)
-			close(cmd.out_file);
-		cmd.out_file = open(parse_line(lst->next->content), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (cmd->out_file)
+			close(cmd->out_file);
+		return (cmd->out_file = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
 	}
 	else if (!ft_strncmp(lst->content, "<<", 2))
 	{
-		if (cmd.in_file)
-			close(cmd.in_file);
-		cmd.in_file = open(parse_line(lst->next->content), O_RDONLY); // ??? проверить
+		if (cmd->in_file)
+			close(cmd->in_file);
+		return (cmd->in_file = open(file, O_RDONLY)); // ??? проверить
 	}
 	else if (!ft_strncmp(lst->content, ">>", 2))
 	{
-		if (cmd.in_file)
-			close(cmd.in_file);
-		cmd.out_file = open(parse_line(lst->next->content), O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (cmd->in_file)
+			close(cmd->in_file);
+		return (cmd->out_file = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644));
 	}
 	return (0);
 }
-
-
 
 int	args_counter(t_list *lst)
 {
@@ -241,14 +242,14 @@ int	args_counter(t_list *lst)
 	char	*token;
 
 	count = 0;
-	while(lst)
+	while (lst)
 	{
 		token = lst->content;
 		if (*token == '<' || *token == '>')
 			break ;
 		if (*token == '|')
 			break ;
-		lst=lst->next;
+		lst = lst->next;
 		count++;
 	}
 	return (count);
@@ -262,13 +263,14 @@ char	**init_cmd_args(t_list **lst)
 
 	i = 0;
 	count_args = args_counter(*lst);
-	args = (char**)malloc(sizeof(char *) * count_args + 1);
+	args = (char**)malloc((sizeof(char *) * count_args) + 1);
 	if (!args)
 		return (NULL);
 	memset(args, '\0', sizeof(char *) * count_args + 1);
 	while (i < count_args)
 	{
-		args[i] = parse_line((*lst)->content);
+		(*lst)->content = parse_line((*lst)->content);
+		args[i] = (*lst)->content;
 		(*lst) = (*lst)->next;
 		i++;
 	}
@@ -287,7 +289,11 @@ int	init_cmd(t_list *lst, t_mini *mini)
 		token = lst->content;
 		if (*token == '<' || *token == '>')
 		{
-			ft_init_file(lst, mini->cmd[i]);
+			if ((ft_init_file(lst, &(mini->cmd[i]))) == -1)
+			{
+				strerror(-1); // Edit
+				return (0);
+			}
 			lst = lst->next->next;
 		}
 		else if (*token == '|')
@@ -297,11 +303,11 @@ int	init_cmd(t_list *lst, t_mini *mini)
 		}
 		else
 		{
-			mini->cmd[i].cmd = parse_line(lst->content);
+			lst->content = parse_line(lst->content);
+			mini->cmd[i].cmd = lst->content;
 			mini->cmd[i].arguments = init_cmd_args(&lst);
 		}
 	}
-
 	return (0);
 }
 
@@ -314,21 +320,24 @@ void print_mini(t_mini *mini)
 	j = 0;
 	while (i < mini->count_cmd)
 	{
-		printf(" nomber %d cmd = %s\n", i +1, mini->cmd[i].cmd);
-		while (mini->cmd[i].arguments[j])
+		if (mini->cmd[i].cmd)
 		{
-			printf(" arg ==  %s\n", mini->cmd[i].arguments[j]);
-			j++;
+			printf(" nomber %d cmd = %s\n", i +1, mini->cmd[i].cmd);
+			while (mini->cmd[i].arguments[j])
+			{
+				printf(" arg ==  %s\n", mini->cmd[i].arguments[j]);
+				j++;
+			}
+			j = 0;
 		}
-		j = 0;
+		printf("fd_in %d, fd_out %d\n", mini->cmd[i].in_file, mini->cmd[i].out_file);
 		i++;
-		// printf(" nomber %d cmd = %s ", i +1, mini->cmd[i].cmd);
 	}
 }
 
 int	parser(char *line, t_mini *mini)
 {
-	t_list *tokens;
+	t_list	*tokens;
 
 	tokens = NULL;
 	mini->count_cmd = pre_parse(line);
@@ -344,8 +353,10 @@ int	parser(char *line, t_mini *mini)
 	// line = parse_line(line);
 	// printf("final line === %s\n", line);
 	tokens = get_tokens(line, tokens);
+	free(line);
 	// print_token(tokens);
 	init_cmd(tokens, mini);
 	print_mini(mini);
+	ft_lstclear(&tokens, free);
 	return (0);
 }
