@@ -6,13 +6,13 @@
 /*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/20 20:31:58 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 21:02:02 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_mshl		data;
 	extern char	**environ;
@@ -87,4 +87,30 @@ void	ft_exit(t_list **is_head_env)
 	if (is_head_env)
 		ft_free_env(is_head_env);
 	exit(nbr);
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	free(cmd->arguments);
+	if (cmd->in_file)
+		close(cmd->in_file);
+	if (cmd->out_file)
+		close(cmd->out_file);
+
+}
+
+void	free_mini(t_mini *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < mini->count_cmd)
+	{
+		free_cmd(mini->cmd + i);
+		i++;
+	}
+	free(mini->cmd);
 }

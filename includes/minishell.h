@@ -20,12 +20,8 @@
 typedef struct	s_cmd{
 	char	*cmd;
 	char	**arguments;
-	char	**infile;
-	char	**outfile;
-	char	*mode_in;
-	char	*mode_out;
-	int		count_infile;
-	int		count_outfile;
+	int		in_file;
+	int		out_file;
 }				t_cmd;
 
 typedef struct	s_mshl{
@@ -63,4 +59,12 @@ void	ft_builtin_export(t_mshl *data);
 
 void	ft_exit(t_list **is_head_env);
 int		ft_print_error(t_list **is_head, const char *str, int nbr);
+
+int		parser(char *line, t_mshl *mini);
+char	*parse_line(char *line);
+int		put_in_mid_line(char **line, char *str, int start, int end);
+int		len_quotes(char *line, int i);
+t_list	*get_tokens(char *line, t_list *token);
+int		init_cmd(t_list *lst, t_mshl *mini);
+
 #endif
