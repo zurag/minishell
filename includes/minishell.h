@@ -28,10 +28,11 @@ typedef struct	s_cmd{
 	int		count_outfile;
 }				t_cmd;
 
-typedef struct	s_mini{
+typedef struct	s_mshl{
 	t_cmd	*cmd;
 	int		count_cmd;
-}				t_mini;
+	t_list	**head_env;
+}				t_mshl;
 
 typedef struct	s_env
 {
@@ -39,9 +40,9 @@ typedef struct	s_env
 	char	*value;
 }				t_env;
 
-int		parser(char *line, t_mini *mini);
+int		parser(char *line, t_mshl *data);
 
-void	ft_run_prompt(t_list **is_head_env);
+void	ft_run_prompt(t_mshl *data);
 
 void	set_input_signals(void);
 void	signal_handler(int signo);
@@ -57,8 +58,8 @@ t_env	**ft_sortenv(t_list **is_head_env);
 
 int		ft_builtin_env(t_list **is_head_env);
 void	ft_builtin_pwd(t_list **is_head_env);
-void	ft_builtin_unset(t_list **is_head_env, char **i_args);
-void	ms_builtin_export(t_list **is_head_env, char **i_args);
+void	ft_builtin_unset(t_mshl *data);
+void	ft_builtin_export(t_mshl *data);
 
 void	ft_exit(t_list **is_head_env);
 int		ft_print_error(t_list **is_head, const char *str, int nbr);

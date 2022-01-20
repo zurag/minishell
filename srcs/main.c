@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/17 22:22:07 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 20:12:39 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	main(void)
 {
-	t_list		*ls_head_env;
+	t_mshl		data;
 	extern char	**environ;
 
-	ls_head_env = ft_init_env(environ);
-	if (!ls_head_env)
+	data.head_env = ft_init_env(environ);
+	if (!data.head_env)
 		return(0);
-	ft_putenv(&ls_head_env, "?", "0");
-	ft_run_prompt(&ls_head_env);
+	ft_putenv(data.head_env, "?", "0");
+	ft_run_prompt(&data);
 	return (0);
 }
 /***********************************************
@@ -53,6 +53,7 @@ void	ft_run_prompt(t_list **is_head_env)
 	char	*line_read;
 	// t_mini	**ls_head_cmd;
 
+	rl_catch_signals = 0;
 	set_input_signals();
 	ft_builtin_env(is_head_env); // test
 	ft_builtin_pwd(is_head_env); // test

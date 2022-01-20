@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_buildin_unset.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:48:25 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/17 23:15:55 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 20:09:40 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,21 @@ static int	ft_is_valid_token_unset(char *s)
 	return (1);
 }
 
-void	ft_builtin_unset(t_list **is_head_env, char **i_args)
+void	ft_builtin_unset(t_mshl *data)
 {
 	int	i;
 
-	if (!i_args)
+	if (!data->cmd->arguments)
 		return ;
 	i = 1;
-	while (i_args[i])
+	while (data->cmd->arguments[i])
 	{
-		if (ft_is_valid_token_unset(i_args[i]))
-			ft_unset_var_env(is_head_env, i_args[i]);
+		if (ft_is_valid_token_unset(data->cmd->arguments[i]))
+			ft_unset_var_env(data->head_env, data->cmd->arguments[i]);
 		else
 		{
-			printf("unset : \'%s\': not a valid identifier\n", i_args[i]);
-			ft_print_error(is_head_env, NULL, 1);
+			printf("unset : \'%s\': not a valid identifier\n", data->cmd->arguments[i]);
+			ft_print_error(data->head_env, NULL, 1);
 			break ;
 		}
 		i++;

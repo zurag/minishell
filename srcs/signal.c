@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 20:17:46 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/15 17:25:34 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:05:50 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	set_input_signals(void)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	signal_handler(int signo)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_export.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 22:20:17 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/17 23:12:44 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 20:01:10 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ static int	ft_has_eql(char *str)
 	return (0);
 }
 
-void	ft_builtin_export(t_list **is_head_env, char **i_args)
+void	ft_builtin_export(t_mshl *data)
 {
 	int	i;
 
 	i = 0;
-	while (i_args[i])
+	while (data->cmd->arguments[i])
 	{
-		if (ft_has_eql(i_args[i]))
+		if (ft_has_eql(data->cmd->arguments[i]))
 		{
 			printf("");
 			// как хранятся данные в токенах?
@@ -62,5 +62,5 @@ void	ft_builtin_export(t_list **is_head_env, char **i_args)
 		i++;
 	}
 	if (i == 1)
-		ft_print_env(is_head_env);
+		ft_print_env(data->head_env);
 }
