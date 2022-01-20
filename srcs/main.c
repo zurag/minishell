@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/20 21:02:02 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 21:15:59 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	t_mshl		data;
 	extern char	**environ;
@@ -24,29 +24,6 @@ int	main(int argc, char **argv)
 	ft_run_prompt(&data);
 	return (0);
 }
-/***********************************************
- * TESTING UNSET FUNC
- **********************************************/
-// int	test_unset(t_mshl *data)
-// {
-// 	char	**args;
-// 	int		i;
-
-// 	// args = NULL;
-// 	// i = 0;
-// 	// data->cmd->arguments = (char **)malloc(sizeof(char *) * 4);
-// 	// data->cmd->arguments[3] = NULL;
-// 	// while (i < 3)
-// 	// {
-// 	// 	if (!(data->cmd->arguments[i] = malloc(sizeof(char) * 5)))
-// 	// 		return (printf("ERROR MALLOC!\n"));
-// 	// 	data->cmd->arguments[i][4] = '\0';
-// 	// 	ft_memccpy(data->cmd->arguments[i], "LAN ", '\0', ft_strlen(data->cmd->arguments[i]));
-// 	// 	i++;
-// 	// }
-// 	// ft_builtin_unset(data);
-// 	return (0);
-// }
 
 void	ft_run_prompt(t_mshl *data)
 {
@@ -73,9 +50,9 @@ void	ft_run_prompt(t_mshl *data)
 			continue ;
 		}
 		add_history(line_read);
-		// parser(line_read, data);
+		parser(line_read, data);
 		// ft_execute(data);
-		free (line_read);
+		free_mshl(data);
 	}
 }
 
@@ -99,10 +76,9 @@ void	free_cmd(t_cmd *cmd)
 		close(cmd->in_file);
 	if (cmd->out_file)
 		close(cmd->out_file);
-
 }
 
-void	free_mini(t_mini *mini)
+void	free_mshl(t_mshl *mini)
 {
 	int	i;
 

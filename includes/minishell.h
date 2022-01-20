@@ -66,5 +66,6 @@ int		put_in_mid_line(char **line, char *str, int start, int end);
 int		len_quotes(char *line, int i);
 t_list	*get_tokens(char *line, t_list *token);
 int		init_cmd(t_list *lst, t_mshl *mini);
-
+void	free_cmd(t_cmd *cmd);
+void	free_mshl(t_mshl *mini);
 #endif

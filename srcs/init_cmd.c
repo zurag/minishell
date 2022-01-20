@@ -75,7 +75,7 @@ static char	**init_cmd_args(t_list **lst)
 	return (args);
 }
 
-int	init_cmd(t_list *lst, t_mini *mini)
+int	init_cmd(t_list *lst, t_mshl *mini)
 {
 	int		i;
 	char	*token;

@@ -3,7 +3,7 @@ NAME		= minishell
 CC			= gcc
 RM			= rm -rf
 
-CFLAGS		= -Wall -Wextra -Werror -I $(READLINE_INC) -MMD -march=native -O2 -pipe -g -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -I $(READLINE_INC) -MMD -march=native -O2 -pipe -g
 
 # Project builds and dirs
 SRCDIR = ./srcs/

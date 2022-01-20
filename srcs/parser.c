@@ -37,7 +37,7 @@ static int pre_parse(char *line) //добавить проверку ><
 	return (count_cmd);
 }
 
-int	parser(char *line, t_mini *mini)
+int	parser(char *line, t_mshl *mini)
 {
 	t_list	*tokens;
 
