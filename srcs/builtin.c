@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:19:53 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/20 20:03:15 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 20:24:54 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	execute_builtin(t_mshl *data)
 {
 	if (!ft_strcmp(data->cmd->arguments[0], "pwd"))
-		ft_builtin_pwd(data->head_env);
+		ft_builtin_pwd(&data->head_env);
 	// else if (!ft_strcmp(data->cmd->arguments[0], "echo"))
 		// ft_echo(data);
 	// else if (!ft_strcmp(data->cmd->arguments[0], "cd"))
 	// 	ft_cd(data);
 	else if (!ft_strcmp(data->cmd->arguments[0], "env"))
-		ft_builtin_env(data->head_env);
+		ft_builtin_env(&data->head_env);
 	else if (!ft_strcmp(data->cmd->arguments[0], "export"))
 		ft_builtin_export(data);
 	else if (!ft_strcmp(data->cmd->arguments[0], "unset"))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_export.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 22:20:17 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/20 20:01:10 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 20:25:21 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,5 @@ void	ft_builtin_export(t_mshl *data)
 		i++;
 	}
 	if (i == 1)
-		ft_print_env(data->head_env);
+		ft_print_env(&data->head_env);
 }

@@ -31,7 +31,7 @@ typedef struct	s_cmd{
 typedef struct	s_mshl{
 	t_cmd	*cmd;
 	int		count_cmd;
-	t_list	**head_env;
+	t_list	*head_env;
 }				t_mshl;
 
 typedef struct	s_env

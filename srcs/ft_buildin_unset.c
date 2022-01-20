@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_buildin_unset.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:48:25 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/20 20:09:40 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 20:23:46 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ void	ft_builtin_unset(t_mshl *data)
 	while (data->cmd->arguments[i])
 	{
 		if (ft_is_valid_token_unset(data->cmd->arguments[i]))
-			ft_unset_var_env(data->head_env, data->cmd->arguments[i]);
+			ft_unset_var_env(&data->head_env, data->cmd->arguments[i]);
 		else
 		{
 			printf("unset : \'%s\': not a valid identifier\n", data->cmd->arguments[i]);
-			ft_print_error(data->head_env, NULL, 1);
+			ft_print_error(&data->head_env, NULL, 1);
 			break ;
 		}
 		i++;
