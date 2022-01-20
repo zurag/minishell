@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/20 21:15:59 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/20 21:36:13 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ void	ft_run_prompt(t_mshl *data)
 
 	rl_catch_signals = 0;
 	set_input_signals();
-	ft_builtin_env(&data->head_env); // test
-	ft_builtin_pwd(&data->head_env); // test
-	// printf("\n\nTEST UNSET\n");
-	// test_unset(data);
+	// ft_builtin_env(&data->head_env); // test
+	// ft_builtin_pwd(&data->head_env); // test
+	// printf("HOME=%s\n", ft_getenv(data->head_env, "HOME")); // test
 	while (1)
 	{
 		line_read = readline("minishell>");

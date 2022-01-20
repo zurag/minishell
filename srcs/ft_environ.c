@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 00:13:06 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/16 20:46:23 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/20 21:27:44 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ int	ft_putenv(t_list **is_head, char *name, char *val)
 char	*ft_getenv(t_list *is_head, char *i_str)
 {
 	t_env	*val;
+	int		i;
 
+	i = 0;
 	if (!is_head || !i_str)
 		return (NULL);
 	while (is_head)
