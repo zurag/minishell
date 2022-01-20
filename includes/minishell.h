@@ -16,7 +16,6 @@
 #include <fcntl.h>
 #include <string.h>
 
-
 typedef struct	s_cmd{
 	char	*cmd;
 	char	**arguments;
@@ -24,14 +23,11 @@ typedef struct	s_cmd{
 	int		out_file;
 }				t_cmd;
 
-typedef struct	s_mini{
-	t_cmd	*cmd;
-	int		count_cmd;
-}				t_mini;
-
-
 int	parser(char *line, t_mini *mini);
-
-
+char	*parse_line(char *line);
+int	put_in_mid_line(char **line, char *str, int start, int end);
+int	len_quotes(char *line, int i);
+t_list	*get_tokens(char *line, t_list *token);
+int	init_cmd(t_list *lst, t_mini *mini);
 
 #endif
