@@ -17,6 +17,14 @@
 #include <string.h>
 #include <limits.h>
 
+#define DEF_CD 1
+#define DEF_PWD 2
+#define DEF_ECHO 3
+#define DEF_ENV 4
+#define DEF_EXIT 5
+#define DEF_UNSET 6
+#define DEF_EXPORT 7
+
 typedef struct	s_cmd{
 	char	*cmd;
 	char	**arguments;
@@ -69,7 +77,8 @@ int		init_cmd(t_list *lst, t_mshl *mini);
 void	free_cmd(t_cmd *cmd);
 void	free_mshl(t_mshl *mini);
 
-
+int		is_builtin(t_mshl *data);
+void	execute_builtin(t_mshl *data);
 
 int	executor(t_mshl *data);
 void print_mini(t_mshl *mini);
