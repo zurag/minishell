@@ -32,7 +32,7 @@ typedef struct	s_mshl{
 
 typedef struct	s_env
 {
-	char	*name;
+	char	*name; 
 	char	*value;
 }				t_env;
 
@@ -68,4 +68,9 @@ t_list	*get_tokens(char *line, t_list *token);
 int		init_cmd(t_list *lst, t_mshl *mini);
 void	free_cmd(t_cmd *cmd);
 void	free_mshl(t_mshl *mini);
+
+
+
+int	executor(t_mshl *data);
+void print_mini(t_mshl *mini);
 #endif

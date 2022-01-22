@@ -5,3 +5,4 @@
 minishell
 libft.a
 ./build/
+.vscode*

@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/20 21:36:13 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/22 17:13:30 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void print_mini(t_mshl *mini)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < mini->count_cmd)
+	{
+		if (mini->cmd[i].cmd)
+		{
+			printf(" nomber %d cmd = %s\n", i +1, mini->cmd[i].cmd);
+			while (mini->cmd[i].arguments[j])
+			{
+				printf(" arg ==  %s\n", mini->cmd[i].arguments[j]);
+				j++;
+			}
+			j = 0;
+		}
+		printf("fd_in %d, fd_out %d\n", mini->cmd[i].in_file, mini->cmd[i].out_file);
+		i++;
+	}
+}
 
 int	main(void)
 {
@@ -50,6 +74,7 @@ void	ft_run_prompt(t_mshl *data)
 		}
 		add_history(line_read);
 		parser(line_read, data);
+		print_mini(data);
 		// ft_execute(data);
 		free_mshl(data);
 	}

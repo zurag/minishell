@@ -55,6 +55,7 @@ int	parser(char *line, t_mshl *mini)
 	tokens = get_tokens(line, tokens);
 	free(line);
 	init_cmd(tokens, mini);
+	// print_mini(mini);
 	ft_lstclear(&tokens, free);
 	return (0);
 }

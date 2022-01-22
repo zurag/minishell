@@ -67,7 +67,7 @@ static char	**init_cmd_args(t_list **lst)
 	while (i < count_args)
 	{
 		(*lst)->content = parse_line((*lst)->content);
-		args[i] = (*lst)->content;
+		args[i] = ft_strdup((*lst)->content);
 		(*lst) = (*lst)->next;
 		i++;
 	}
@@ -101,7 +101,7 @@ int	init_cmd(t_list *lst, t_mshl *mini)
 		else
 		{
 			lst->content = parse_line(lst->content);
-			mini->cmd[i].cmd = lst->content;
+			mini->cmd[i].cmd = ft_strdup(lst->content);
 			mini->cmd[i].arguments = init_cmd_args(&lst);
 		}
 	}
