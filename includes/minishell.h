@@ -59,6 +59,8 @@ char	*ft_getenv(t_list *is_head, char *i_str);
 void	ft_free_env(t_list **is_head);
 void	ft_delete_env(void *lst);
 t_env	**ft_sortenv(t_list **is_head_env);
+t_list	*ft_search_dubname(t_list **is_head, char *name);
+char	*get_name(char *s);
 
 int		ft_builtin_env(t_list **is_head_env);
 void	ft_builtin_pwd(t_list **is_head_env);
@@ -79,6 +81,7 @@ void	free_mshl(t_mshl *mini);
 
 int		is_builtin(t_mshl *data);
 void	execute_builtin(t_mshl *data);
+char	**list2mass_env(t_list *lst);
 
 int	executor(t_mshl *data);
 void print_mini(t_mshl *mini);

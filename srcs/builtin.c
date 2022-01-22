@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:19:53 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/22 18:38:24 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/22 19:19:55 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,35 @@ void	execute_builtin(t_mshl *data)
 		ft_builtin_unset(data);
 	// else if (!ft_strcmp(data->cmd->arguments[0], "exit"))
 	// 	ft_builtin_exit(data);
+}
+
+static char	*ft_join_env(t_env *env)
+{
+	char	*str_env;
+	char	*tmp;
+
+	tmp = ft_strjoin(env->name, "=");
+	str_env = ft_strjoin(tmp, env->value);
+	free(tmp);
+	return (str_env);
+}
+
+char	**list2mass_env(t_list *lst)
+{
+	int		i;
+	int		size;
+	char	**mass;
+	t_env	*env;
+
+	size = ft_lstsize(lst) + 1;
+	mass = malloc(size * sizeof(char *));
+	i = 0;
+	while (lst && i < size)
+	{
+		env = (t_env *)lst->content;
+		mass[i++] = ft_join_env(env);
+		lst = lst->next;
+	}
+	mass[i] = NULL;
+	return (mass);
 }

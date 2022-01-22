@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:42:44 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/16 20:20:36 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/22 21:26:01 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,34 @@ void	ft_free_env(t_list **is_head)
 	}
 	if(*is_head != NULL)
 	free(is_head);
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->arguments[i])
+	{
+		free(cmd->arguments[i]);
+		i++;
+	}
+	free(cmd->arguments);
+	if (cmd->in_file)
+		close(cmd->in_file);
+	if (cmd->out_file)
+		close(cmd->out_file);
+}
+
+void	free_mshl(t_mshl *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < mini->count_cmd)
+	{
+		free_cmd(mini->cmd + i);
+		i++;
+	}
+	free(mini->cmd);
 }

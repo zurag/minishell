@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/22 17:52:42 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/22 22:37:21 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,15 @@ int	main(void)
 void	ft_run_prompt(t_mshl *data)
 {
 	char	*line_read;
-	// t_mini	**ls_head_cmd;
 
 	rl_catch_signals = 0;
-	set_input_signals();
-	// ft_builtin_env(&data->head_env); // test
-	// ft_builtin_pwd(&data->head_env); // test
-	// printf("HOME=%s\n", ft_getenv(data->head_env, "HOME")); // test
 	while (1)
 	{
-		line_read = readline("minishell>");
+		set_input_signals();
+		line_read = readline("\001\033[1;92m\002minishell> \001\033[0m\002");
 		if (!line_read)
 		{
+			ft_putstr_fd("exit\n", 1);
 			free(line_read);
 			ft_exit(&data->head_env);
 		}
@@ -88,29 +85,4 @@ void	ft_exit(t_list **is_head_env)
 	if (is_head_env)
 		ft_free_env(is_head_env);
 	exit(nbr);
-}
-
-void	free_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	free(cmd->arguments);
-	if (cmd->in_file)
-		close(cmd->in_file);
-	if (cmd->out_file)
-		close(cmd->out_file);
-}
-
-void	free_mshl(t_mshl *mini)
-{
-	int	i;
-
-	i = 0;
-	while (i < mini->count_cmd)
-	{
-		free_cmd(mini->cmd + i);
-		i++;
-	}
-	free(mini->cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 00:13:06 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/20 21:27:44 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/22 22:26:11 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int	ft_insnewlst(t_list **is_head, char *name, char *val)
 	return (0);
 }
 
-int	ft_putenv(t_list **is_head, char *name, char *val)
+t_list	*ft_search_dubname(t_list **is_head, char *name)
 {
 	t_env	*ls_ptr;
 	t_list	*ls_tmp_head;
-
+	
 	ls_tmp_head = *is_head;
 	while (ls_tmp_head)
 	{
@@ -60,8 +60,18 @@ int	ft_putenv(t_list **is_head, char *name, char *val)
 			break ;
 		ls_tmp_head = ls_tmp_head->next;
 	}
+	return (ls_tmp_head);
+}
+
+int	ft_putenv(t_list **is_head, char *name, char *val)
+{
+	t_env	*ls_ptr;
+	t_list	*ls_tmp_head;
+
+	ls_tmp_head = ft_search_dubname(is_head, name);
 	if (ls_tmp_head)
 	{
+		ls_ptr = (t_env *)(ls_tmp_head->content);
 		free(ls_ptr->value);
 		ls_ptr->value = ft_calloc(ft_strlen(val) + 1, sizeof(char));
 		ls_ptr->value = ft_memcpy(ls_ptr->value, val, ft_strlen(val));
