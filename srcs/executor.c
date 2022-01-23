@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 16:39:22 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/23 13:31:23 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/23 16:07:14 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*join_path(char *cmd, char **path)
 	char	*tmp;
 
 	i = 0;
+	if (!cmd)
+		return (NULL);
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	tmp = ft_strjoin("/", cmd);
@@ -80,7 +82,6 @@ void	process(t_mshl *data, char **envp, int i, int **fd)
 	if (execve(data->cmd[i].cmd, data->cmd[i].arguments, envp) == -1)
 	{
 		perror(NULL);
-		write(2, "ERROR IN EXEC\n", ft_strlen("ERROR IN EXEC\n"));
 		exit (errno);
 	}
 	exit(EXIT_SUCCESS);

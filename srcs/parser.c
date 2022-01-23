@@ -50,6 +50,15 @@ static int pre_parse(char *line) //добавить проверку ><
 	return (count_cmd);
 }
 
+void	print_token(t_list *lst)
+{
+	while(lst)
+	{
+		printf("token == %s\n", (char *)lst->content);
+		lst = lst->next;
+	}
+}
+
 int	parser(char *line, t_mshl *mini)
 {
 	t_list	*tokens;
@@ -63,12 +72,13 @@ int	parser(char *line, t_mshl *mini)
 	}
 	tokens = get_tokens(line, tokens);
 	free(line);
+	// print_token(tokens);
 	mini->cmd = malloc(sizeof(t_cmd) * mini->count_cmd);
 	if (!mini->count_cmd)
 		return (1);
 	ft_memset(mini->cmd, '\0', sizeof(t_cmd) * mini->count_cmd);
 	init_cmd(tokens, mini);
-	// // print_mini(mini);
-	// ft_lstclear(&tokens, free);
+	// print_mini(mini);
+	ft_lstclear(&tokens, free);
 	return (0);
 }

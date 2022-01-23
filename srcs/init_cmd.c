@@ -102,8 +102,9 @@ int	init_cmd(t_list *lst, t_mshl *mini)
 		}
 		else
 		{
-			lst->content = parse_line(lst->content);
 			mini->cmd[i].cmd = ft_strdup(lst->content);
+			mini->cmd[i].cmd = parse_line(mini->cmd[i].cmd);
+			// lst->content = parse_line(lst->content);
 			mini->cmd[i].arguments = init_cmd_args(&lst);
 		}
 	}
