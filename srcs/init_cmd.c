@@ -84,12 +84,14 @@ int	init_cmd(t_list *lst, t_mshl *mini)
 	while (lst)
 	{
 		token = lst->content;
+		if (!token)
+			return (1);
 		if (*token == '<' || *token == '>')
 		{
 			if ((ft_init_file(lst, &(mini->cmd[i]))) == -1)
 			{
 				strerror(-1); // Edit
-				return (0);
+				return (1);
 			}
 			lst = lst->next->next;
 		}

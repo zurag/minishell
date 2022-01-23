@@ -1,16 +1,29 @@
 #include "../includes/minishell.h"
 
+
+static	int check_empty_line(char *line)
+{
+	if (!*line)
+	{
+		free(line);
+		return (1);
+	}
+	while((*line == ' ' || *line == '\t') && *line)
+		line++;
+	if (!*line)
+		return (1);
+	return (0);
+}
+
+
 static int pre_parse(char *line) //добавить проверку ><
 {
 	char	quotes;
 	int		count_cmd;
 
 	count_cmd = 1;
-	if (!*line)
-	{
-		free(line);
-		return (0);
-	}
+	if (check_empty_line(line))
+		return (-1);
 	while (*line)
 	{
 		if (*line == '\'' || *line == '\"')
@@ -48,14 +61,14 @@ int	parser(char *line, t_mshl *mini)
 		printf("ERROR unclosed quotes\n");
 		return (1);
 	}
+	tokens = get_tokens(line, tokens);
+	free(line);
 	mini->cmd = malloc(sizeof(t_cmd) * mini->count_cmd);
 	if (!mini->count_cmd)
 		return (1);
 	ft_memset(mini->cmd, '\0', sizeof(t_cmd) * mini->count_cmd);
-	tokens = get_tokens(line, tokens);
-	free(line);
 	init_cmd(tokens, mini);
-	// print_mini(mini);
-	ft_lstclear(&tokens, free);
+	// // print_mini(mini);
+	// ft_lstclear(&tokens, free);
 	return (0);
 }

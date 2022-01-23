@@ -52,7 +52,7 @@ t_list	*get_tokens(char *line, t_list *token)
 	i = 0;
 	while (line[i])
 	{
-		while (line[i] == ' ' || line[i] == '\t')
+		while ((line[i] == ' ' || line[i] == '\t') && line[i])
 			i++;
 		len = len_token(line, i);
 		tmp = ft_substr(line, i, len);
