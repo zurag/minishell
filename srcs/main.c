@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/22 17:13:30 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/22 23:23:11 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,23 @@ void print_mini(t_mshl *mini)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	t_mshl		data;
 	extern char	**environ;
+
+	(void)argc;
+	(void)argv;
 
 	data.head_env = ft_init_env(environ);
 	if (!data.head_env)
 		return(0);
 	ft_putenv(&data.head_env, "?", "0");
-	ft_run_prompt(&data);
+	ft_run_prompt(&data, env);
 	return (0);
 }
 
-void	ft_run_prompt(t_mshl *data)
+void	ft_run_prompt(t_mshl *data, char **env)
 {
 	char	*line_read;
 	// t_mini	**ls_head_cmd;
@@ -74,8 +77,8 @@ void	ft_run_prompt(t_mshl *data)
 		}
 		add_history(line_read);
 		parser(line_read, data);
-		print_mini(data);
-		// ft_execute(data);
+		// print_mini(data);
+		executor(data, env);
 		free_mshl(data);
 	}
 }

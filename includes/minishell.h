@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <limits.h>
+# include <errno.h>
 
 typedef struct	s_cmd{
 	char	*cmd;
@@ -38,7 +39,7 @@ typedef struct	s_env
 
 int		parser(char *line, t_mshl *data);
 
-void	ft_run_prompt(t_mshl *data);
+void	ft_run_prompt(t_mshl *data, char **env);
 
 void	set_input_signals(void);
 void	signal_handler(int signo);
@@ -71,6 +72,7 @@ void	free_mshl(t_mshl *mini);
 
 
 
-int	executor(t_mshl *data);
-void print_mini(t_mshl *mini);
+int		executor(t_mshl *data, char **envp);
+void	ft_close_fd(int *fd[2], t_mshl *data);
+void	print_mini(t_mshl *mini);
 #endif
