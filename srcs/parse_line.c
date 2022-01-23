@@ -76,6 +76,8 @@ char	*parse_line(char *line)
 	int	i;
 
 	i = 0;
+	if (!*line)
+		return (NULL);
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '\"')

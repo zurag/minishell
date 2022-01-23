@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/22 23:23:11 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/23 14:06:39 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void print_mini(t_mshl *mini)
 	{
 		if (mini->cmd[i].cmd)
 		{
-			printf(" nomber %d cmd = %s\n", i +1, mini->cmd[i].cmd);
+			printf(" nomber %d cmd = <%s>\n", i +1, mini->cmd[i].cmd);
 			while (mini->cmd[i].arguments[j])
 			{
-				printf(" arg ==  %s\n", mini->cmd[i].arguments[j]);
+				printf(" arg ==  <%s>\n", mini->cmd[i].arguments[j]);
 				j++;
 			}
 			j = 0;
@@ -77,7 +77,7 @@ void	ft_run_prompt(t_mshl *data, char **env)
 		}
 		add_history(line_read);
 		parser(line_read, data);
-		// print_mini(data);
+		print_mini(data);
 		executor(data, env);
 		free_mshl(data);
 	}
