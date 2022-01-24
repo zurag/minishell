@@ -40,7 +40,7 @@ typedef struct	s_mshl{
 
 typedef struct	s_env
 {
-	char	*name; 
+	char	*name;
 	char	*value;
 }				t_env;
 
@@ -61,11 +61,14 @@ void	ft_delete_env(void *lst);
 t_env	**ft_sortenv(t_list **is_head_env);
 t_list	*ft_search_dubname(t_list **is_head, char *name);
 char	*get_name(char *s);
+char	*ft_check_tilde(t_list **head, char *str);
+int		ft_update_dir(t_list **head);
 
 int		ft_builtin_env(t_list **is_head_env);
 void	ft_builtin_pwd(t_list **is_head_env);
 void	ft_builtin_unset(t_mshl *data);
 void	ft_builtin_export(t_mshl *data);
+int		ft_builtin_cd(t_mshl *d);
 
 void	ft_exit(t_list **is_head_env);
 int		ft_print_error(t_list **is_head, const char *str, int nbr);
