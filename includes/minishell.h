@@ -61,6 +61,8 @@ void	ft_delete_env(void *lst);
 t_env	**ft_sortenv(t_list **is_head_env);
 t_list	*ft_search_dubname(t_list **is_head, char *name);
 char	*get_name(char *s);
+char	*ft_check_tilde(t_list **head, char *str);
+int		ft_update_dir(t_list **head);
 
 int		ft_builtin_env(t_list **is_head_env);
 void	ft_builtin_pwd(t_list **is_head_env);
