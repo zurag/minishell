@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:19:53 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 13:31:01 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:22:38 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	execute_builtin(t_mshl *data, int num_cmd)
 		ft_builtin_export(data, num_cmd);
 	else if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "unset"))
 		ft_builtin_unset(data, num_cmd);
-	// else if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "exit"))
-	// 	ft_builtin_exit(data);
+	else if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "exit"))
+		ft_builtin_exit(data, num_cmd);
 }
 
 static char	*ft_join_env(t_env *env)

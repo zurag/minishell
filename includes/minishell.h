@@ -70,8 +70,9 @@ void	ft_builtin_unset(t_mshl *data, int num_cmd);
 void	ft_builtin_export(t_mshl *data, int num_cmd);
 int		ft_builtin_cd(t_mshl *d, int num_cmd);
 void	ft_builtin_echo(t_mshl *d, int num_cmd);
+void	ft_builtin_exit(t_mshl *data, int num_cmd);
 
-void	ft_exit(t_list **is_head_env);
+void	ft_exit(t_mshl *data);
 int		ft_print_error(t_list **is_head, const char *str, int nbr);
 
 int		parser(char *line, t_mshl *mini);
