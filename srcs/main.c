@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/23 17:19:58 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/25 10:25:31 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	ft_exit(t_list **is_head_env)
 void	free_cmd(t_cmd *cmd)
 {
 	int	i;
+	t_redir *redir;
 
 	i = 0;
 	free(cmd->arguments);
@@ -103,6 +104,13 @@ void	free_cmd(t_cmd *cmd)
 		close(cmd->in_file);
 	if (cmd->out_file)
 		close(cmd->out_file);
+	while (cmd->redir)
+	{
+		redir = cmd->redir->content;
+		free(redir->name);
+		cmd->redir = cmd->redir->next;
+	}
+	ft_lstclear(&cmd->redir, free);
 }
 
 void	free_mshl(t_mshl *mini)

@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 16:39:22 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/23 16:07:14 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/25 12:54:54 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char	*join_path(char *cmd, char **path)
 
 // signal(SIGQUIT, SIG_DFL); перед exec
 
-
 void	ft_dup_fd(int i, int **fd, t_mshl *data)
 {
 	if (i != 0)
@@ -73,11 +72,45 @@ void	ft_dup_fd(int i, int **fd, t_mshl *data)
 		close(data->cmd[i].out_file);
 	}
 	ft_close_fd(fd, data);
-	
+}
+
+int	ft_redir(t_cmd *cmd, t_list *lst)
+{
+	t_redir *redir;
+	while (lst)
+	{
+		redir = lst->content;
+		if (redir->mode == MODE_READ)
+		{
+			if (cmd->in_file)
+				close(cmd->in_file);
+			cmd->in_file = open(redir->name, O_RDONLY);
+		}
+		else if (redir->mode == MODE_WRITE)
+		{
+			if (cmd->out_file)
+				close(cmd->out_file);
+			cmd->out_file = open(redir->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		}
+		else if (redir->mode == MODE_APPEND)
+		{
+			if (cmd->out_file)
+				close(cmd->out_file);
+			cmd->out_file = open(redir->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		}
+		else if (redir->mode == MODE_HEREDOC)
+		{
+			heredoc(cmd, redir->name);
+		}
+		lst = lst->next;
+	}
+	return (0);
 }
 
 void	process(t_mshl *data, char **envp, int i, int **fd)
 {
+	signal(SIGQUIT, SIG_DFL);
+	ft_redir(data->cmd + i, data->cmd[i].redir);
 	ft_dup_fd(i, fd, data);
 	if (execve(data->cmd[i].cmd, data->cmd[i].arguments, envp) == -1)
 	{

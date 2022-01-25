@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 20:14:44 by zurag             #+#    #+#             */
-/*   Updated: 2021/04/29 16:07:02 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/25 12:12:51 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,5 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+	write(fd, s, ft_strlen(s));
 }

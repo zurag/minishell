@@ -1,38 +1,5 @@
 #include "../includes/minishell.h"
 
-static int	ft_init_file(t_list *lst, t_cmd *cmd)
-{
-	char	*file;
-
-	lst->next->content = parse_line(lst->next->content);
-	file = lst->next->content;
-	if (!ft_strncmp(lst->content, "<", 1))
-	{
-		if (cmd->in_file)
-			close(cmd->in_file);
-		return (cmd->in_file = open(file, O_RDONLY));
-	}
-	else if (!ft_strncmp(lst->content, ">", 1))
-	{
-		if (cmd->out_file)
-			close(cmd->out_file);
-		return (cmd->out_file = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
-	}
-	else if (!ft_strncmp(lst->content, "<<", 2))
-	{
-		if (cmd->in_file)
-			close(cmd->in_file);
-		return (cmd->in_file = open(file, O_RDONLY)); // ??? проверить
-	}
-	else if (!ft_strncmp(lst->content, ">>", 2))
-	{
-		if (cmd->in_file)
-			close(cmd->in_file);
-		return (cmd->out_file = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644));
-	}
-	return (0);
-}
-
 static int	args_counter(t_list *lst)
 {
 	int		count;
@@ -88,11 +55,7 @@ int	init_cmd(t_list *lst, t_mshl *mini)
 			return (1);
 		if (*token == '<' || *token == '>')
 		{
-			if ((ft_init_file(lst, &(mini->cmd[i]))) == -1)
-			{
-				strerror(-1); // Edit
-				return (1);
-			}
+			ft_init_file(lst, &(mini->cmd[i]));
 			lst = lst->next->next;
 		}
 		else if (*token == '|')

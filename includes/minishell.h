@@ -2,28 +2,42 @@
 # define MINISHELL_H
 
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <curses.h>
-#include <term.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include "libft.h"
-#include <sys/wait.h>
-#include <signal.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <string.h>
-#include <limits.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <curses.h>
+# include <term.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include "libft.h"
+# include <sys/wait.h>
+# include <signal.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <string.h>
+# include <limits.h>
 # include <errno.h>
+# include <termios.h>
+
+
+#define MODE_APPEND 1
+#define MODE_READ 2
+#define MODE_WRITE 3
+#define MODE_HEREDOC 4
+
+typedef struct s_redir{
+	char	*name;
+	char	mode;
+}				t_redir;
 
 typedef struct	s_cmd{
 	char	*cmd;
 	char	**arguments;
 	int		in_file;
 	int		out_file;
+	t_list	*redir;
 }				t_cmd;
+
 
 typedef struct	s_mshl{
 	t_cmd	*cmd;
@@ -69,10 +83,11 @@ t_list	*get_tokens(char *line, t_list *token);
 int		init_cmd(t_list *lst, t_mshl *mini);
 void	free_cmd(t_cmd *cmd);
 void	free_mshl(t_mshl *mini);
-
+void		ft_init_file(t_list *lst, t_cmd *cmd);
 
 
 int		executor(t_mshl *data, char **envp);
 void	ft_close_fd(int *fd[2], t_mshl *data);
 void	print_mini(t_mshl *mini);
+int	heredoc(t_cmd *cmd, const char *end_file);
 #endif
