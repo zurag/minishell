@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:48:25 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 11:38:38 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:26:48 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	ft_builtin_unset(t_mshl *data, int num_cmd)
 			ft_unset_var_env(&data->head_env, data->cmd[num_cmd].arguments[i]);
 		else
 		{
-			printf("unset : \'%s\': not a valid identifier\n", data->cmd[num_cmd].arguments[i]);
+			printf("unset : \'%s\': not a valid identifier\n", \
+					data->cmd[num_cmd].arguments[i]);
 			ft_print_error(&data->head_env, NULL, 1);
 			break ;
 		}

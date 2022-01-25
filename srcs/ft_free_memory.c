@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:42:44 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 17:27:38 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:37:30 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	ft_free_env(t_list **is_head)
 		*ls_current = ls_next;
 		i++;
 	}
-	if(*is_head != NULL)
-	free(is_head);
+	if (*is_head != NULL)
+		free(is_head);
 }
 
 void	free_cmd(t_cmd *cmd)

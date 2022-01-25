@@ -6,13 +6,13 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 11:34:33 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 11:39:48 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:27:40 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_update_dir(t_list **head)
+int	ft_update_dir(t_list **head)
 {
 	int		err;
 	char	*new_pwd;
@@ -37,7 +37,7 @@ char	*ft_check_tilde(t_list **head, char *str)
 	return (ft_strjoin(ft_getenv(*head, "HOME"), str));
 }
 
-int		ft_builtin_cd(t_mshl *d, int num_cmd)
+int	ft_builtin_cd(t_mshl *d, int num_cmd)
 {
 	int		err;
 	char	*new_pwd;
@@ -54,7 +54,7 @@ int		ft_builtin_cd(t_mshl *d, int num_cmd)
 			free(new_pwd);
 	}
 	if (err)
-		ft_print_error(&d->head_env,  d->cmd[num_cmd].arguments[1], -1);
+		ft_print_error(&d->head_env, d->cmd[num_cmd].arguments[1], -1);
 	else
 	{
 		err = ft_update_dir(&d->head_env);
