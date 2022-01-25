@@ -6,25 +6,11 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 22:20:17 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 11:43:51 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:30:24 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int			ft_isset(char c, char *set)
-{
-	int	i;
-
-	i = 0;
-	while (set[i])
-	{
-		if (c == set[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 static void	ft_print_env(t_list **is_head_env)
 {
@@ -46,18 +32,6 @@ static void	ft_print_env(t_list **is_head_env)
 	free(ls_head_env);
 }
 
-static int	ft_has_eql(char *str, t_mshl *data)
-{
-	t_list	*ls_tmp_head;
-
-	if (str && !ft_isalpha(*str))
-		return (1);
-	ls_tmp_head = ft_search_dubname(&data->head_env, str);
-	if (ls_tmp_head)
-		return (1);
-	return (0);
-}
-
 char	*get_name(char *s)
 {
 	int		i;
@@ -74,29 +48,57 @@ int	ft_check_name(char *name)
 {
 	if (ft_isalpha(name[0]) || name[0] == '_')
 		return (1);
-	ft_putstr_fd("minishell: export: \'", 2);
+	ft_putstr_fd("export: \'", 2);
 	ft_putstr_fd(name, 2);
 	ft_putstr_fd("\': not a valid identifier\n", 2);
 	return (0);
 }
 
+int	add_value(char *name, t_mshl *d, int num_cmd, int i)
+{
+	char	*value;
+	int		flag;
+
+	flag = 0;
+	if (ft_check_name(name))
+	{
+		if (ft_isset('=', d->cmd[num_cmd].arguments[i]))
+			value = get_value_env(d->cmd[num_cmd].arguments[i]);
+		else
+			value = get_value_env(d->cmd[num_cmd].arguments[++i]);
+		if (ft_strlen(value))
+			ft_putenv(&d->head_env, name, value);
+		else
+		{
+			ft_putstr_fd("export: \'", 2);
+			ft_putstr_fd(d->cmd[num_cmd].arguments[i], 2);
+			ft_putstr_fd("\': not a valid identifier\n", 2);
+			ft_print_error(&d->head_env, NULL, 1);
+			return (-1);
+		}
+		free(value);
+	}
+	else
+		return (-1);
+	return (i);
+}
+
 void	ft_builtin_export(t_mshl *data, int num_cmd)
 {
 	int		i;
-	// char	*name;
+	char	*name;
 
+	if (!data->cmd[num_cmd].arguments[1])
+		return (ft_print_env(&data->head_env));
 	i = 1;
-	while (data->cmd[num_cmd].arguments[i])
+	while (ft_strlen(data->cmd[num_cmd].arguments[i]))
 	{
-		// name = get_name();
-		// if (ft_check_name(data->cmd[num_cmd].arguments[i]))
-
-		if (!ft_has_eql(data->cmd[num_cmd].arguments[i], data))
-		{
-
-		}
+		name = get_name_env(data->cmd[num_cmd].arguments[i]);
+		i = add_value(name, data, num_cmd, i);
+		free(name);
+		if (i == -1)
+			return ;
 		i++;
 	}
-	if (i == 1)
-		ft_print_env(&data->head_env);
+	ft_print_error(&data->head_env, NULL, 0);
 }

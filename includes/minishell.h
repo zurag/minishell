@@ -63,6 +63,9 @@ t_list	*ft_search_dubname(t_list **is_head, char *name);
 char	*get_name(char *s);
 char	*ft_check_tilde(t_list **head, char *str);
 int		ft_update_dir(t_list **head);
+char	*get_name_env(char *s);
+char	*get_value_env(char *s);
+int		ft_isset(char c, char *set);
 
 int		ft_builtin_env(t_list **is_head_env);
 void	ft_builtin_pwd(t_list **is_head_env);

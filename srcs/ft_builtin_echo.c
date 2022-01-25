@@ -6,13 +6,13 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 10:51:45 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 13:36:03 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:35:41 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		ft_is_flag_echo(char *s)
+static int	ft_is_flag_echo(char *s)
 {
 	if (!s || *s != '-')
 		return (0);
@@ -63,4 +63,18 @@ void	ft_builtin_echo(t_mshl *d, int num_cmd)
 	if (!flag)
 		printf("\n");
 	ft_print_error(&d->head_env, NULL, 0);
+}
+
+int	ft_isset(char c, char *set)
+{
+	int	i;
+
+	i = 0;
+	while (set[i])
+	{
+		if (c == set[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }

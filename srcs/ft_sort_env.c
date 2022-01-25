@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sort_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 22:38:50 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/17 23:14:43 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:37:54 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int	ft_comp(char *one, char *two)
 static void	ft_bubble_sort(t_env **is_head_env, int nbr)
 {
 	t_env	*ls_tmp;
-	int	swapped;
-	int	i;
+	int		swapped;
+	int		i;
 
 	swapped = 1;
 	while (swapped)
@@ -50,7 +50,7 @@ static void	ft_bubble_sort(t_env **is_head_env, int nbr)
 				swapped = 1;
 			}
 			i++;
-		}	
+		}
 	}
 }
 
@@ -59,7 +59,7 @@ t_env	**ft_sortenv(t_list **is_head_env)
 	t_env	**ls_head_env;
 	t_list	*ls_cur_env;
 	int		i;
-	
+
 	i = 0;
 	ls_head_env = calloc(ft_lstsize(*is_head_env) + 1, sizeof(t_env *));
 	if (!ls_head_env)

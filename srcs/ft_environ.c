@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_environ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 00:13:06 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/22 22:26:11 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 22:36:11 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list	*ft_add2list(t_list *is_head_env, char *i_str)
 	ls_content->name = ls_val_env[0];
 	ls_content->value = ls_val_env[1];
 	ft_lstadd_back(&is_head_env, ft_lstnew(ls_content));
-	// free(ls_val_env);
+	free(ls_val_env);
 	return (is_head_env);
 }
 
@@ -45,22 +45,6 @@ int	ft_insnewlst(t_list **is_head, char *name, char *val)
 	content->value = ft_memcpy(content->value, val, ft_strlen(val) + 1);
 	ft_lstadd_back(is_head, ft_lstnew(content));
 	return (0);
-}
-
-t_list	*ft_search_dubname(t_list **is_head, char *name)
-{
-	t_env	*ls_ptr;
-	t_list	*ls_tmp_head;
-	
-	ls_tmp_head = *is_head;
-	while (ls_tmp_head)
-	{
-		ls_ptr = (t_env *)(ls_tmp_head->content);
-		if (!ft_strncmp(ls_ptr->name, name, ft_strlen(name) + 1))
-			break ;
-		ls_tmp_head = ls_tmp_head->next;
-	}
-	return (ls_tmp_head);
 }
 
 int	ft_putenv(t_list **is_head, char *name, char *val)
@@ -113,7 +97,8 @@ t_list	*ft_init_env(char **env)
 		ls_head_env = ft_add2list(ls_head_env, env[i++]);
 	if (!ls_head_env || !i)
 	{
-		ft_print_error(&ls_head_env, "Raised error in adding env's node to list", 0);
+		ft_print_error(&ls_head_env, \
+		"Raised error in adding env's node to list", 0);
 		ft_free_env(&ls_head_env);
 		return (NULL);
 	}
