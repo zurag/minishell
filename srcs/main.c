@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/24 22:12:06 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 18:17:00 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_run_prompt(t_mshl *data)
 		{
 			ft_putstr_fd("exit\n", 1);
 			free(line_read);
-			ft_exit(&data->head_env);
+			ft_exit(data);
 		}
 		if (!ft_strlen(line_read))
 		{
@@ -72,17 +72,20 @@ void	ft_run_prompt(t_mshl *data)
 		add_history(line_read);
 		parser(line_read, data);
 		print_mini(data);
+		execute_builtin(data, 0);
 		// ft_execute(data);
 		free_mshl(data);
 	}
 }
 
-void	ft_exit(t_list **is_head_env)
+void	ft_exit(t_mshl *data)
 {
 	int	nbr;
 
-	nbr = ft_atoi(ft_getenv(*is_head_env, "?"));
-	if (is_head_env)
-		ft_free_env(is_head_env);
+	nbr = ft_atoi(ft_getenv(data->head_env, "?"));
+	if (data->head_env)
+		ft_free_env(&data->head_env);
+	if (data->cmd && data->count_cmd > 0)
+		free_mshl(data);
 	exit(nbr);
 }

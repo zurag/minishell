@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_memory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:42:44 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/22 21:26:01 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:27:38 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,6 @@ void	free_mshl(t_mshl *mini)
 		i++;
 	}
 	free(mini->cmd);
+	mini->count_cmd = 0;
+	mini->cmd = NULL;
 }
