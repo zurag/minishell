@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:19:53 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 11:37:41 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:31:01 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	execute_builtin(t_mshl *data, int num_cmd)
 {
 	if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "pwd"))
 		ft_builtin_pwd(&data->head_env);
-	// else if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "echo"))
-		// ft_echo(data);
+	else if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "echo"))
+		ft_builtin_echo(data, num_cmd);
 	else if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "cd"))
 		ft_builtin_cd(data, num_cmd);
 	else if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "env"))
