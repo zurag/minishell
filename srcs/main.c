@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 18:17:00 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 19:07:06 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_run_prompt(t_mshl *data)
 		add_history(line_read);
 		parser(line_read, data);
 		print_mini(data);
-		execute_builtin(data, 0);
+		// execute_builtin(data, 0); // test
 		// ft_execute(data);
 		free_mshl(data);
 	}
