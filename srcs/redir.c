@@ -51,6 +51,8 @@ void	ft_init_file(t_list *lst, t_cmd *cmd)
 	char	*file;
 	t_redir	*redir;
 
+	if(!lst)
+		return ;
 	redir = malloc(sizeof(t_redir));
 	lst->next->content = parse_line(lst->next->content);
 	file = lst->next->content;
@@ -58,9 +60,9 @@ void	ft_init_file(t_list *lst, t_cmd *cmd)
 		redir->mode = MODE_HEREDOC;
 	else if (!ft_strncmp(lst->content, ">>", 2))
 		redir->mode = MODE_APPEND;
-	else if (!ft_strncmp(lst->content, ">", 1))
+	else if (!ft_strncmp(lst->content, ">", 2))
 		redir->mode = MODE_WRITE;
-	else if (!ft_strncmp(lst->content, "<", 1))
+	else if (!ft_strncmp(lst->content, "<", 2))
 		redir->mode = MODE_READ;
 	redir->name = ft_strdup(file);
 	ft_lstadd_back(&cmd->redir, ft_lstnew(redir));

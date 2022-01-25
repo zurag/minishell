@@ -25,6 +25,8 @@
 #define MODE_WRITE 3
 #define MODE_HEREDOC 4
 
+// int	g_exit_status;
+
 typedef struct s_redir{
 	char	*name;
 	char	mode;

@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 10:25:31 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/25 20:06:04 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ void	ft_run_prompt(t_mshl *data, char **env)
 			continue ;
 		}
 		add_history(line_read);
-		parser(line_read, data);
+		if (parser(line_read, data))
+		{
+			free(line_read);
+				continue ;
+		}
 		// print_mini(data);
 		executor(data, env);
 		free_mshl(data);
@@ -123,5 +127,6 @@ void	free_mshl(t_mshl *mini)
 		free_cmd(mini->cmd + i);
 		i++;
 	}
+	mini->count_cmd = 0;
 	free(mini->cmd);
 }
