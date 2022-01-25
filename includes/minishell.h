@@ -66,9 +66,10 @@ int		ft_update_dir(t_list **head);
 
 int		ft_builtin_env(t_list **is_head_env);
 void	ft_builtin_pwd(t_list **is_head_env);
-void	ft_builtin_unset(t_mshl *data);
-void	ft_builtin_export(t_mshl *data);
-int		ft_builtin_cd(t_mshl *d);
+void	ft_builtin_unset(t_mshl *data, int num_cmd);
+void	ft_builtin_export(t_mshl *data, int num_cmd);
+int		ft_builtin_cd(t_mshl *d, int num_cmd);
+void	ft_builtin_echo(t_mshl *d, int num_cmd);
 
 void	ft_exit(t_list **is_head_env);
 int		ft_print_error(t_list **is_head, const char *str, int nbr);
@@ -82,8 +83,8 @@ int		init_cmd(t_list *lst, t_mshl *mini);
 void	free_cmd(t_cmd *cmd);
 void	free_mshl(t_mshl *mini);
 
-int		is_builtin(t_mshl *data);
-void	execute_builtin(t_mshl *data);
+int		is_builtin(t_mshl *data, int num_cmd);
+void	execute_builtin(t_mshl *data, int num_cmd);
 char	**list2mass_env(t_list *lst);
 
 int	executor(t_mshl *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_export.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 22:20:17 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/22 23:34:27 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:43:51 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,18 @@ int	ft_check_name(char *name)
 	return (0);
 }
 
-void	ft_builtin_export(t_mshl *data)
+void	ft_builtin_export(t_mshl *data, int num_cmd)
 {
 	int		i;
 	// char	*name;
 
 	i = 1;
-	while (data->cmd->arguments[i])
+	while (data->cmd[num_cmd].arguments[i])
 	{
 		// name = get_name();
-		// if (ft_check_name(data->cmd->arguments[i]))
+		// if (ft_check_name(data->cmd[num_cmd].arguments[i]))
 
-		if (!ft_has_eql(data->cmd->arguments[i], data))
+		if (!ft_has_eql(data->cmd[num_cmd].arguments[i], data))
 		{
 
 		}
