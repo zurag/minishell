@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 16:37:34 by zurag             #+#    #+#             */
-/*   Updated: 2021/04/22 16:56:42 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/23 14:16:27 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s)
 	int		len;
 	char	*copy;
 
+	if (!s)
+		return (NULL);
 	len = ft_strlen(s);
 	copy = malloc((len + 1) * sizeof(char));
 	if (copy == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_memory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:42:44 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/26 13:36:51 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:20:42 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,23 @@ void	ft_free_env(t_list **is_head)
 
 void	free_cmd(t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	t_redir	*redir;
 
 	i = 0;
-	free(cmd->cmd);
-	while (cmd->arguments[i])
-	{
-		free(cmd->arguments[i]);
-		i++;
-	}
 	free(cmd->arguments);
 	if (cmd->in_file)
 		close(cmd->in_file);
 	if (cmd->out_file)
 		close(cmd->out_file);
+	free(cmd->cmd);
+	while (cmd->redir)
+	{
+		redir = cmd->redir->content;
+		free(redir->name);
+		cmd->redir = cmd->redir->next;
+	}
+	ft_lstclear(&cmd->redir, free);
 }
 
 void	free_mshl(t_mshl *mini)
@@ -71,7 +74,8 @@ void	free_mshl(t_mshl *mini)
 		free_cmd(mini->cmd + i);
 		i++;
 	}
-	free(mini->cmd);
 	mini->count_cmd = 0;
+	free(mini->cmd);
 	mini->cmd = NULL;
 }
+

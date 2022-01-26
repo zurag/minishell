@@ -1,41 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 13:43:34 by zurag             #+#    #+#             */
+/*   Updated: 2022/01/26 13:58:27 by zurag            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-
-static int pre_parse(char *line) //добавить проверку ><
-{
-	char	quotes;
-	int		count_cmd;
-
-	count_cmd = 1;
-	if (!*line)
-	{
-		free(line);
-		return (0);
-	}
-	while (*line)
-	{
-		if (*line == '\'' || *line == '\"')
-		{
-			quotes = *line;
-			line++;
-			while (*line != quotes && *line)
-				line++;
-			if (*line != quotes)
-				return (-1);
-		}
-		if (*line == '|')
-		{
-			count_cmd++;
-			line++;
-			if (*line == '|')
-				return (-1);
-		}
-		else
-			line++;
-	}
-	if (*(line - 1) == '|' || *(line - 1) == '<' || *(line - 1) == '>')
-		return (-1);
-	return (count_cmd);
-}
 
 int	parser(char *line, t_mshl *mini)
 {
@@ -45,17 +20,16 @@ int	parser(char *line, t_mshl *mini)
 	mini->count_cmd = pre_parse(line);
 	if (mini->count_cmd == -1)
 	{
-		printf("ERROR unclosed quotes\n");
+		ft_putenv(mini->head_env, "?", 1);
 		return (1);
 	}
+	tokens = get_tokens(line, tokens);
 	mini->cmd = malloc(sizeof(t_cmd) * mini->count_cmd);
 	if (!mini->count_cmd)
 		return (1);
 	ft_memset(mini->cmd, '\0', sizeof(t_cmd) * mini->count_cmd);
-	tokens = get_tokens(line, tokens);
-	free(line);
 	init_cmd(tokens, mini);
-	// print_mini(mini);
+	free(line);
 	ft_lstclear(&tokens, free);
 	return (0);
 }

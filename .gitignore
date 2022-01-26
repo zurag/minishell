@@ -6,3 +6,4 @@ minishell
 libft.a
 ./build/
 .vscode*
+a.out

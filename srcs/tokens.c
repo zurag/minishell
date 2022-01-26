@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 13:20:28 by zurag             #+#    #+#             */
+/*   Updated: 2022/01/26 13:20:28 by zurag            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	len_quotes(char *line, int i)
@@ -52,7 +64,7 @@ t_list	*get_tokens(char *line, t_list *token)
 	i = 0;
 	while (line[i])
 	{
-		while (line[i] == ' ' || line[i] == '\t')
+		while ((line[i] == ' ' || line[i] == '\t') && line[i])
 			i++;
 		len = len_token(line, i);
 		tmp = ft_substr(line, i, len);

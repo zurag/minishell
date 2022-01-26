@@ -1,37 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_cmd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 13:21:24 by zurag             #+#    #+#             */
+/*   Updated: 2022/01/26 13:52:47 by zurag            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-
-static int	ft_init_file(t_list *lst, t_cmd *cmd)
-{
-	char	*file;
-
-	lst->next->content = parse_line(lst->next->content);
-	file = lst->next->content;
-	if (!ft_strncmp(lst->content, "<", 1))
-	{
-		if (cmd->in_file)
-			close(cmd->in_file);
-		return (cmd->in_file = open(file, O_RDONLY));
-	}
-	else if (!ft_strncmp(lst->content, ">", 1))
-	{
-		if (cmd->out_file)
-			close(cmd->out_file);
-		return (cmd->out_file = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
-	}
-	else if (!ft_strncmp(lst->content, "<<", 2))
-	{
-		if (cmd->in_file)
-			close(cmd->in_file);
-		return (cmd->in_file = open(file, O_RDONLY)); // ??? проверить
-	}
-	else if (!ft_strncmp(lst->content, ">>", 2))
-	{
-		if (cmd->in_file)
-			close(cmd->in_file);
-		return (cmd->out_file = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644));
-	}
-	return (0);
-}
 
 static int	args_counter(t_list *lst)
 {
@@ -52,7 +31,7 @@ static int	args_counter(t_list *lst)
 	return (count);
 }
 
-static char	**init_cmd_args(t_list **lst)
+static char	**init_cmd_args(t_list **lst, t_mshl *data)
 {
 	int		count_args;
 	char	**args;
@@ -60,19 +39,26 @@ static char	**init_cmd_args(t_list **lst)
 
 	i = 0;
 	count_args = args_counter(*lst);
-	args = (char**)malloc((sizeof(char *) * count_args) + 1);
+	args = malloc((sizeof(char *) * count_args) + 1);
 	if (!args)
 		return (NULL);
 	memset(args, '\0', sizeof(char *) * count_args + 1);
 	while (i < count_args)
 	{
-		(*lst)->content = parse_line((*lst)->content);
+		(*lst)->content = parse_line((*lst)->content, data);
 		args[i] = ft_strdup((*lst)->content);
 		(*lst) = (*lst)->next;
 		i++;
 	}
 	args[i] = NULL;
 	return (args);
+}
+
+static void	init_command(t_list **lst, t_mshl *data, int i)
+{
+	data->cmd[i].cmd = ft_strdup((*lst)->content);
+	data->cmd[i].cmd = parse_line(data->cmd[i].cmd, data);
+	data->cmd[i].arguments = init_cmd_args(lst, data);
 }
 
 int	init_cmd(t_list *lst, t_mshl *mini)
@@ -84,13 +70,11 @@ int	init_cmd(t_list *lst, t_mshl *mini)
 	while (lst)
 	{
 		token = lst->content;
+		if (!token)
+			return (1);
 		if (*token == '<' || *token == '>')
 		{
-			if ((ft_init_file(lst, &(mini->cmd[i]))) == -1)
-			{
-				strerror(-1); // Edit
-				return (0);
-			}
+			ft_init_file(lst, &(mini->cmd[i]));
 			lst = lst->next->next;
 		}
 		else if (*token == '|')
@@ -99,11 +83,7 @@ int	init_cmd(t_list *lst, t_mshl *mini)
 			lst = lst->next;
 		}
 		else
-		{
-			lst->content = parse_line(lst->content);
-			mini->cmd[i].cmd = ft_strdup(lst->content);
-			mini->cmd[i].arguments = init_cmd_args(&lst);
-		}
+			init_command(&lst, mini, i);
 	}
 	return (0);
 }

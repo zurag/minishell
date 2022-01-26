@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 19:07:06 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:20:59 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void print_mini(t_mshl *mini)
 	{
 		if (mini->cmd[i].cmd)
 		{
-			printf(" nomber %d cmd = %s\n", i +1, mini->cmd[i].cmd);
+			printf(" nomber %d cmd = <%s>\n", i +1, mini->cmd[i].cmd);
 			while (mini->cmd[i].arguments[j])
 			{
-				printf(" arg ==  %s\n", mini->cmd[i].arguments[j]);
+				printf(" arg ==  <%s>\n", mini->cmd[i].arguments[j]);
 				j++;
 			}
 			j = 0;
@@ -43,7 +43,7 @@ int	main(void)
 
 	data.head_env = ft_init_env(environ);
 	if (!data.head_env)
-		return(0);
+		return (0);
 	ft_putenv(&data.head_env, "?", "0");
 	ft_run_prompt(&data);
 	return (0);
@@ -52,6 +52,7 @@ int	main(void)
 void	ft_run_prompt(t_mshl *data)
 {
 	char	*line_read;
+	char	**env;
 
 	rl_catch_signals = 0;
 	while (1)
@@ -70,10 +71,13 @@ void	ft_run_prompt(t_mshl *data)
 			continue ;
 		}
 		add_history(line_read);
-		parser(line_read, data);
-		print_mini(data);
-		// execute_builtin(data, 0); // test
-		// ft_execute(data);
+		if (parser(line_read, data))
+		{
+			free(line_read);
+			continue ;
+		}
+		env = list2mass_env(data->head_env);
+		executor(data, env);
 		free_mshl(data);
 	}
 }
@@ -89,3 +93,4 @@ void	ft_exit(t_mshl *data)
 		free_mshl(data);
 	exit(nbr);
 }
+
