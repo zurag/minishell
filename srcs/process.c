@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:18:29 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 18:08:11 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 18:56:20 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	process(t_mshl *data, char **envp, int i, int **fd)
 
 	ret = 0;
 	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	ret = ft_redir(data->cmd + i, data->cmd[i].redir);
 	if (ret)
 		exit(EXIT_FAILURE);

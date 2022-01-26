@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:16:19 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 17:10:55 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 18:36:48 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_env{
 	char	*value;
 }				t_env;
 
-int		parser(char *line, t_mshl *data);
 
 void	ft_run_prompt(t_mshl *data);
 

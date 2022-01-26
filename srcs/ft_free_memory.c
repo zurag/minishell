@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:42:44 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/26 17:40:45 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 18:42:30 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,41 @@ void	ft_free_env(t_list **is_head)
 		free(is_head);
 }
 
-void	free_cmd(t_cmd *cmd)
+void	free_redir(t_cmd *cmd)
 {
-	int		i;
 	t_redir	*redir;
+	t_list	*start;
 
-	i = 0;
-	while (cmd->arguments[i])
-	{
-		free (cmd->arguments[i]);
-		i++;
-	}
-	i = 0;
-	free(cmd->arguments);
-	if (cmd->in_file)
-		close(cmd->in_file);
-	if (cmd->out_file)
-		close(cmd->out_file);
-	free(cmd->cmd);
+	start = cmd->redir;
 	while (cmd->redir)
 	{
 		redir = cmd->redir->content;
 		free(redir->name);
 		cmd->redir = cmd->redir->next;
 	}
-	ft_lstclear(&cmd->redir, free);
+	ft_lstclear(&start, free);
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd->arguments && cmd->arguments[i])
+	{
+		free (cmd->arguments[i]);
+		i++;
+	}
+	i = 0;
+	if (cmd->arguments)
+		free(cmd->arguments);
+	if (cmd->in_file)
+		close(cmd->in_file);
+	if (cmd->out_file)
+		close(cmd->out_file);
+	if (cmd->cmd)
+		free(cmd->cmd);
+	free_redir(cmd);
 }
 
 void	free_mshl(t_mshl *mini)
