@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/26 18:28:32 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 19:07:34 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_mini(t_mshl *mini)
+void	print_mini(t_mshl *mini)
 {
 	int	i;
 	int	j;
@@ -31,7 +31,8 @@ void print_mini(t_mshl *mini)
 			}
 			j = 0;
 		}
-		printf("fd_in %d, fd_out %d\n", mini->cmd[i].in_file, mini->cmd[i].out_file);
+		printf("fd_in %d, fd_out %d\n", \
+		mini->cmd[i].in_file, mini->cmd[i].out_file);
 		i++;
 	}
 }
@@ -59,6 +60,7 @@ void	ft_run_prompt(t_mshl *data)
 	{
 		set_input_signals();
 		line_read = readline("\001\033[1;92m\002minishell> \001\033[0m\002");
+		signal(SIGINT, &signal_handler2);
 		if (!line_read)
 		{
 			ft_putstr_fd("exit\n", 1);

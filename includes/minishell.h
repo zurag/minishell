@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:16:19 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 18:36:48 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 19:04:35 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	ft_run_prompt(t_mshl *data);
 
 void	set_input_signals(void);
 void	signal_handler(int signo);
+void	signal_handler2(int signo);
 
 t_list	*ft_init_env(char **env);
 t_list	*ft_add2list(t_list *is_env, char *i_str);
