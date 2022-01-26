@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 20:06:04 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 13:46:07 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,24 @@ void print_mini(t_mshl *mini)
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(void)
 {
 	t_mshl		data;
 	extern char	**environ;
 
-	(void)argc;
-	(void)argv;
-
 	data.head_env = ft_init_env(environ);
 	if (!data.head_env)
-		return(0);
+		return (0);
 	ft_putenv(&data.head_env, "?", "0");
-	ft_run_prompt(&data, env);
+	ft_run_prompt(&data);
 	return (0);
 }
 
-void	ft_run_prompt(t_mshl *data, char **env)
+void	ft_run_prompt(t_mshl *data)
 {
 	char	*line_read;
+	char	**env;
 	// t_mini	**ls_head_cmd;
-	(void)env;
 	rl_catch_signals = 0;
 	set_input_signals();
 	// ft_builtin_env(&data->head_env); // test
@@ -81,7 +78,7 @@ void	ft_run_prompt(t_mshl *data, char **env)
 			free(line_read);
 				continue ;
 		}
-		// print_mini(data);
+		env = list2mass_env(data->head_env);
 		executor(data, env);
 		free_mshl(data);
 	}
@@ -100,7 +97,7 @@ void	ft_exit(t_list **is_head_env)
 void	free_cmd(t_cmd *cmd)
 {
 	int	i;
-	t_redir *redir;
+	t_redir	*redir;
 
 	i = 0;
 	free(cmd->arguments);
@@ -108,6 +105,7 @@ void	free_cmd(t_cmd *cmd)
 		close(cmd->in_file);
 	if (cmd->out_file)
 		close(cmd->out_file);
+	free(cmd->cmd);
 	while (cmd->redir)
 	{
 		redir = cmd->redir->content;

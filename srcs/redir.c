@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 13:19:23 by zurag             #+#    #+#             */
+/*   Updated: 2022/01/26 14:53:11 by zurag            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	read_heredoc(const char *end, int *fd)
@@ -22,7 +34,7 @@ int	read_heredoc(const char *end, int *fd)
 
 int	heredoc(t_cmd *cmd, const char *end_file)
 {
-	int	fd[2];
+	int		fd[2];
 	pid_t	id;
 	// struct termios	*attr_out;
 	// struct termios	*attr_in;
@@ -43,18 +55,62 @@ int	heredoc(t_cmd *cmd, const char *end_file)
 	// free(attr_in);
 	dup2(fd[0], cmd->in_file);
 	close(fd[0]);
-	return(0);
+	return (0);
 }
 
-void	ft_init_file(t_list *lst, t_cmd *cmd)
+static void	ft_check_fd(t_cmd *cmd, t_redir	**rd, t_list *lst)
+{
+	*rd = lst->content;
+	if ((*rd)->mode == MODE_READ || MODE_HEREDOC)
+	{
+		if (cmd->in_file)
+			close(cmd->in_file);
+	}
+	else if ((*rd)->mode == MODE_APPEND || (*rd)->mode == MODE_WRITE)
+	{
+		if (cmd->out_file)
+			close(cmd->out_file);
+	}
+}
+
+int	ft_redir(t_cmd *cmd, t_list *lst)
+{
+	t_redir	*rd;
+
+	while (lst)
+	{
+		ft_check_fd(cmd, &rd, lst);
+		if (rd->mode == MODE_READ)
+		{
+			cmd->in_file = open(rd->name, O_RDONLY);
+			return (ft_check_open(cmd->in_file, rd->name));
+		}
+		else if (rd->mode == MODE_WRITE)
+		{
+			cmd->out_file = open(rd->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			return (ft_check_open(cmd->out_file, rd->name));
+		}
+		else if (rd->mode == MODE_APPEND)
+		{
+			cmd->out_file = open(rd->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			return (ft_check_open(cmd->out_file, rd->name));
+		}
+		else if (rd->mode == MODE_HEREDOC)
+			heredoc(cmd, rd->name);
+		lst = lst->next;
+	}
+	return (0);
+}
+
+void	ft_init_file(t_list *lst, t_cmd *cmd, t_mshl *data)
 {
 	char	*file;
 	t_redir	*redir;
 
-	if(!lst)
+	if (!lst)
 		return ;
 	redir = malloc(sizeof(t_redir));
-	lst->next->content = parse_line(lst->next->content);
+	lst->next->content = parse_line(lst->next->content, data);
 	file = lst->next->content;
 	if (!ft_strncmp(lst->content, "<<", 2))
 		redir->mode = MODE_HEREDOC;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_line.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 13:49:19 by zurag             #+#    #+#             */
+/*   Updated: 2022/01/26 13:50:31 by zurag            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 static int	is_end(int c)
@@ -30,7 +42,7 @@ int	put_in_mid_line(char **line, char *str, int start, int end)
 	return (0);
 }
 
-static int	dollar(char **line, int start) // не обрабатывает $?
+static int	dollar(char **line, int start, t_mshl *data)
 {
 	int		i;
 	char	*str;
@@ -40,7 +52,7 @@ static int	dollar(char **line, int start) // не обрабатывает $?
 	while ((*line)[start + i + 1] && !(is_end((*line)[start + i + 1])))
 		i++;
 	tmp = ft_substr(*line, start + 1, i);
-	str = getenv(tmp);
+	str = ft_getenv(data->head_env, tmp);
 	if (!str)
 		return (-1);
 	free(tmp);
@@ -48,7 +60,7 @@ static int	dollar(char **line, int start) // не обрабатывает $?
 	return (1);
 }
 
-static	int	del_quotes(char **line, int start)
+static	int	del_quotes(char **line, int start, t_mshl *data)
 {
 	char	quotes;
 	char	*mid;
@@ -59,7 +71,7 @@ static	int	del_quotes(char **line, int start)
 	while ((*line)[end])
 	{
 		if ((*line)[end] == '$' && quotes == '\"')
-			dollar(line, end);
+			dollar(line, end, data);
 		else if ((*line)[end] == quotes)
 			break ;
 		else
@@ -71,7 +83,7 @@ static	int	del_quotes(char **line, int start)
 	return (end - 2);
 }
 
-char	*parse_line(char *line)
+char	*parse_line(char *line, t_mshl *data)
 {
 	int	i;
 
@@ -82,13 +94,13 @@ char	*parse_line(char *line)
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 		{
-			i = del_quotes(&line, i);
+			i = del_quotes(&line, i, data);
 			if (i == -1)
 				break ;
 		}
 		else if (line[i] == '$')
 		{
-			i = dollar(&line, i);
+			i = dollar(&line, i, data);
 			if (i == -1)
 				break ;
 		}

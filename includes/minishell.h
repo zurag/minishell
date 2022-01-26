@@ -25,8 +25,6 @@
 #define MODE_WRITE 3
 #define MODE_HEREDOC 4
 
-// int	g_exit_status;
-
 typedef struct s_redir{
 	char	*name;
 	char	mode;
@@ -55,7 +53,7 @@ typedef struct	s_env
 
 int		parser(char *line, t_mshl *data);
 
-void	ft_run_prompt(t_mshl *data, char **env);
+void	ft_run_prompt(t_mshl *data);
 
 void	set_input_signals(void);
 void	signal_handler(int signo);
@@ -78,18 +76,26 @@ void	ft_exit(t_list **is_head_env);
 int		ft_print_error(t_list **is_head, const char *str, int nbr);
 
 int		parser(char *line, t_mshl *mini);
-char	*parse_line(char *line);
+int		pre_parse(char *line);
+char	*parse_line(char *line, t_mshl *data);
 int		put_in_mid_line(char **line, char *str, int start, int end);
 int		len_quotes(char *line, int i);
 t_list	*get_tokens(char *line, t_list *token);
 int		init_cmd(t_list *lst, t_mshl *mini);
 void	free_cmd(t_cmd *cmd);
 void	free_mshl(t_mshl *mini);
-void		ft_init_file(t_list *lst, t_cmd *cmd);
-
+void	ft_init_file(t_list *lst, t_cmd *cmd, t_mshl *data);
+int		is_builtin(t_mshl *data, int num_cmd);
+void	execute_builtin(t_mshl *data, int num_cmd);
 
 int		executor(t_mshl *data, char **envp);
 void	ft_close_fd(int *fd[2], t_mshl *data);
-void	print_mini(t_mshl *mini);
-int	heredoc(t_cmd *cmd, const char *end_file);
+int		ft_create_pipe(int **fd, t_mshl *data);
+void	process(t_mshl *data, char **envp, int i, int **fd);
+int		heredoc(t_cmd *cmd, const char *end_file);
+int		set_exit_status(int exit_status);
+void	ft_free_arr(char **arr);
+int		ft_check_open(int fd, char *name);
+char	*join_path(char *cmd, char **path, t_list *head_env);
+char	**list2mass_env(t_list *lst);
 #endif
