@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:16:19 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 15:32:25 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 17:10:55 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	free_cmd(t_cmd *cmd);
 void	free_mshl(t_mshl *mini);
 void	ft_init_file(t_list *lst, t_cmd *cmd, t_mshl *data);
 int		is_builtin(t_mshl *data, int num_cmd);
-void	execute_builtin(t_mshl *data, int num_cmd);
+int		execute_builtin(t_mshl *data, int num_cmd);
 char	**list2mass_env(t_list *lst);
 
 int		executor(t_mshl *data, char **envp);

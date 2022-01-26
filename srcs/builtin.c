@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:19:53 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/26 15:22:03 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 17:09:59 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_builtin(t_mshl *data, int num_cmd)
 	return (0);
 }
 
-void	execute_builtin(t_mshl *data, int num_cmd)
+int	execute_builtin(t_mshl *data, int num_cmd)
 {
 	if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "pwd"))
 		ft_builtin_pwd(&data->head_env);
@@ -49,6 +49,7 @@ void	execute_builtin(t_mshl *data, int num_cmd)
 		ft_builtin_unset(data, num_cmd);
 	else if (!ft_strcmp(data->cmd[num_cmd].arguments[0], "exit"))
 		ft_builtin_exit(data, num_cmd);
+	return (0);
 }
 
 static char	*ft_join_env(t_env *env)

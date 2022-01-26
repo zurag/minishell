@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:49:19 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 13:50:31 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 17:23:26 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	is_end(int c)
 	if (ft_isalpha(c))
 		return (0);
 	if (ft_isdigit(c))
+		return (0);
+	if (c == '?')
 		return (0);
 	return (1);
 }
@@ -54,7 +56,10 @@ static int	dollar(char **line, int start, t_mshl *data)
 	tmp = ft_substr(*line, start + 1, i);
 	str = ft_getenv(data->head_env, tmp);
 	if (!str)
+	{
+		free(tmp);
 		return (-1);
+	}
 	free(tmp);
 	put_in_mid_line(line, str, start, start + i);
 	return (1);
@@ -71,7 +76,10 @@ static	int	del_quotes(char **line, int start, t_mshl *data)
 	while ((*line)[end])
 	{
 		if ((*line)[end] == '$' && quotes == '\"')
-			dollar(line, end, data);
+		{
+			if (dollar(line, end, data) == -1)
+				end++;
+		}
 		else if ((*line)[end] == quotes)
 			break ;
 		else

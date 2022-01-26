@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 16:39:22 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 14:34:33 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 16:28:54 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	**ft_get_path(t_mshl *data)
 
 	tmp = ft_getenv(data->head_env, "PATH");
 	path = ft_split(tmp, ':');
-	free(tmp);
+	// free(tmp);
 	return (path);
 }
 
@@ -50,7 +50,10 @@ static int	cmd_with_path(t_mshl *dt, char **envp, char **path)
 	while (i < dt->count_cmd)
 	{
 		if (is_builtin(dt, i))
+		{
+			i++;
 			continue ;
+		}
 		dt->cmd[i].cmd = join_path(dt->cmd[i].cmd, path, dt->head_env);
 		if (!dt->cmd[i].cmd)
 		{
@@ -67,10 +70,14 @@ int	executor(t_mshl *data, char **envp)
 {
 	pid_t	*id;
 	char	**path;
+	int		ret;
 
 	path = ft_get_path(data);
 	if (!data->cmd[0].cmd)
-		ft_redir(&data->cmd[0], data->cmd[0].redir);
+	{
+		ret = ft_redir(&data->cmd[0], data->cmd[0].redir);
+		ft_print_error(&data->head_env, NULL, ret);
+	}
 	else
 	{
 		if (cmd_with_path(data, envp, path) == -1)

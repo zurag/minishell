@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:18:29 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 15:31:48 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 17:11:32 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	process(t_mshl *data, char **envp, int i, int **fd)
 	signal(SIGQUIT, SIG_DFL);
 	ret = ft_redir(data->cmd + i, data->cmd[i].redir);
 	if (ret)
-		exit(1);
+		exit(EXIT_FAILURE);
 	ft_dup_fd(i, fd, data);
 	if (is_builtin(data, i))
 		execute_builtin(data, i);
@@ -66,16 +66,13 @@ static void	ft_wait_process(pid_t	*id, t_mshl *data)
 {
 	int		i;
 	int		ret;
-	char	*tmp;
 
 	i = 0;
 	while (i < data->count_cmd)
 	{
 		waitpid(id[i], &ret, 0);
 		ret = set_exit_status(ret);
-		tmp = ft_itoa(ret);
-		ft_putenv(&data->head_env, "?", tmp);
-		free(tmp);
+		ft_print_error(&data->head_env, NULL, ret);
 		i++;
 	}
 }
@@ -85,13 +82,12 @@ int	ft_processing(pid_t	*id, t_mshl *data, char **envp)
 	int		i;
 	int		**fd;
 
-	i = 0;
+	i = -1;
+	if (is_builtin(data, 0) && data->count_cmd == 1)
+		return (execute_builtin(data, 0));
 	fd = malloc(sizeof(int *) * (data->count_cmd - 1));
-	while (i < data->count_cmd - 1)
-	{
+	while (++i < data->count_cmd - 1)
 		fd[i] = malloc(sizeof(int ) * 2);
-		i++;
-	}
 	if ((ft_create_pipe(fd, data)) || !fd)
 		return (1);
 	i = 0;
