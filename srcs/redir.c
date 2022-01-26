@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:19:23 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 16:14:21 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 20:01:58 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	read_heredoc(const char *end, int *fd)
 {
 	char	*line;
 
+	signal(SIGINT, SIG_DFL);
 	close(fd[0]);
 	while (1)
 	{
@@ -36,23 +37,24 @@ int	heredoc(t_cmd *cmd, const char *end_file)
 {
 	int		fd[2];
 	pid_t	id;
-	// struct termios	*attr_out;
-	// struct termios	*attr_in;
+	struct termios	*attr_out;
+	struct termios	*attr_in;
 
-	// attr_out = (struct termios *)malloc(sizeof(struct termios));
-	// attr_in = (struct termios *)malloc(sizeof(struct termios));
+	attr_out = (struct termios *)malloc(sizeof(struct termios));
+	attr_in = (struct termios *)malloc(sizeof(struct termios));
 	pipe(fd);
-	// tcgetattr(STDOUT_FILENO, attr_out);
-	// tcgetattr(STDIN_FILENO, attr_in);
+	tcgetattr(STDOUT_FILENO, attr_out);
+	tcgetattr(STDIN_FILENO, attr_in);
 	id = fork();
+	signal(SIGINT, SIG_IGN);
 	if (id == 0)
 		read_heredoc(end_file, fd);
 	close(fd[1]);
 	waitpid(id, NULL, 0);
-	// tcsetattr(STDOUT_FILENO, TCSAFLUSH, attr_out);
-	// tcsetattr(STDIN_FILENO, TCSANOW, attr_in);
-	// free(attr_out);
-	// free(attr_in);
+	tcsetattr(STDOUT_FILENO, TCSAFLUSH, attr_out);
+	tcsetattr(STDIN_FILENO, TCSANOW, attr_in);
+	free(attr_out);
+	free(attr_in);
 	dup2(fd[0], cmd->in_file);
 	close(fd[0]);
 	return (0);

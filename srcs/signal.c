@@ -6,7 +6,7 @@
 /*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 20:17:46 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/26 19:04:22 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:24:18 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	signal_handler(int signo)
 void	signal_handler2(int signo)
 {
 	if (signo == SIGINT)
+	{
 		ft_putendl_fd("", 1);
+	}
 }
