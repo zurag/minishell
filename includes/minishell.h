@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:16:19 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 19:04:35 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:47:04 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 
 # include <stdio.h>
 # include <unistd.h>
@@ -30,8 +29,6 @@
 # include <limits.h>
 # include <errno.h>
 # include <termios.h>
-
-
 
 typedef struct s_redir{
 	char	*name;
@@ -59,7 +56,6 @@ typedef struct s_cmd{
 	t_list	*redir;
 }				t_cmd;
 
-
 typedef struct s_mshl{
 	t_cmd	*cmd;
 	int		count_cmd;
@@ -70,7 +66,6 @@ typedef struct s_env{
 	char	*name;
 	char	*value;
 }				t_env;
-
 
 void	ft_run_prompt(t_mshl *data);
 
@@ -104,6 +99,7 @@ void	ft_builtin_exit(t_mshl *data, int num_cmd);
 
 void	ft_exit(t_mshl *data);
 int		ft_print_error(t_list **is_head, const char *str, int nbr);
+void	ft_print_err_export(char *str);
 
 int		parser(char *line, t_mshl *mini);
 int		pre_parse(char *line);
@@ -119,7 +115,7 @@ int		is_builtin(t_mshl *data, int num_cmd);
 int		execute_builtin(t_mshl *data, int num_cmd);
 char	**list2mass_env(t_list *lst);
 
-int		executor(t_mshl *data, char **envp);
+int		executor(t_mshl *data);
 void	ft_close_fd(int *fd[2], t_mshl *data);
 int		ft_create_pipe(int **fd, t_mshl *data);
 void	process(t_mshl *data, char **envp, int i, int **fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_export.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 22:20:17 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/26 14:22:10 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:38:07 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ int	ft_check_name(char *name)
 {
 	if (ft_isalpha(name[0]) || name[0] == '_')
 		return (1);
-	ft_putstr_fd("export: \'", 2);
-	ft_putstr_fd(name, 2);
-	ft_putstr_fd("\': not a valid identifier\n", 2);
+	ft_print_err_export(name);
 	return (0);
 }
 
@@ -70,9 +68,7 @@ int	add_value(char *name, t_mshl *d, int num_cmd, int i)
 			ft_putenv(&d->head_env, name, value);
 		else
 		{
-			ft_putstr_fd("export: \'", 2);
-			ft_putstr_fd(value, 2);
-			ft_putstr_fd("\': not a valid identifier\n", 2);
+			ft_print_err_export(value);
 			ft_print_error(&d->head_env, NULL, 1);
 			free(value);
 			return (-1);

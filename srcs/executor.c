@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 16:39:22 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 18:14:36 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 20:55:51 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static char	**ft_get_path(t_mshl *data)
 
 	tmp = ft_getenv(data->head_env, "PATH");
 	path = ft_split(tmp, ':');
-	// free(tmp);
 	return (path);
 }
 
@@ -66,12 +65,14 @@ static int	cmd_with_path(t_mshl *dt, char **envp, char **path)
 	return (0);
 }
 
-int	executor(t_mshl *data, char **envp)
+int	executor(t_mshl *data)
 {
 	pid_t	*id;
 	char	**path;
 	int		ret;
+	char	**envp;
 
+	envp = list2mass_env(data->head_env);
 	path = ft_get_path(data);
 	if (!data->cmd[0].cmd)
 	{
@@ -81,11 +82,7 @@ int	executor(t_mshl *data, char **envp)
 	else
 	{
 		if (cmd_with_path(data, envp, path) == -1)
-		{
-			// ft_free_arr(path);
-			// ft_free_arr(envp);
 			return (-1);
-		}
 		id = malloc(sizeof(pid_t) * data->count_cmd);
 		ft_processing(id, data, envp);
 		free(id);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:19:23 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 20:01:58 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:57:57 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	read_heredoc(const char *end, int *fd)
 
 int	heredoc(t_cmd *cmd, const char *end_file)
 {
-	int		fd[2];
-	pid_t	id;
+	int				fd[2];
+	pid_t			id;
 	struct termios	*attr_out;
 	struct termios	*attr_in;
 

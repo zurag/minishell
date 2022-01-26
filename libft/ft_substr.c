@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 16:57:28 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/23 15:43:06 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 20:39:57 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
-	
+
 	str = ft_calloc((len + 1), sizeof(char));
 	if (str == NULL)
 		return (NULL);
