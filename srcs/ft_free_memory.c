@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:42:44 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/26 15:20:42 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 17:40:45 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ void	free_cmd(t_cmd *cmd)
 	int		i;
 	t_redir	*redir;
 
+	i = 0;
+	while (cmd->arguments[i])
+	{
+		free (cmd->arguments[i]);
+		i++;
+	}
 	i = 0;
 	free(cmd->arguments);
 	if (cmd->in_file)

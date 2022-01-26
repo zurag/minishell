@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:18:29 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 17:11:32 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 17:48:25 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_close_fd(int *fd[2], t_mshl *data)
 		close(fd[i][1]);
 		i++;
 	}
+	free(fd);
 }
 
 static void	ft_wait_process(pid_t	*id, t_mshl *data)
