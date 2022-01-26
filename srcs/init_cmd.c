@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:21:24 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 13:52:47 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 15:28:45 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	init_cmd(t_list *lst, t_mshl *mini)
 			return (1);
 		if (*token == '<' || *token == '>')
 		{
-			ft_init_file(lst, &(mini->cmd[i]));
+			ft_init_file(lst, &(mini->cmd[i]), mini);
 			lst = lst->next->next;
 		}
 		else if (*token == '|')

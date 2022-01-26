@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:43:34 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 13:58:27 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 15:29:39 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	parser(char *line, t_mshl *mini)
 	mini->count_cmd = pre_parse(line);
 	if (mini->count_cmd == -1)
 	{
-		ft_putenv(mini->head_env, "?", 1);
+		ft_putenv(&mini->head_env, "?", "1");
 		return (1);
 	}
 	tokens = get_tokens(line, tokens);

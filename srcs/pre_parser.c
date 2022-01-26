@@ -6,9 +6,11 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:58:32 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 14:05:30 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 15:31:10 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
 
 static	int	check_empty_line(char *line)
 {
@@ -77,6 +79,7 @@ int	pre_parse(char *line)
 		return (-1);
 	while (*line)
 	{
+		quotes = '0';
 		ft_check_sign(&line, quotes, count_cmd);
 	}
 	if (*(line - 1) == '|' || *(line - 1) == '<' || *(line - 1) == '>')

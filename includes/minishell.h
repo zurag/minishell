@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:16:19 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 15:17:22 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 15:32:25 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,7 @@ int		set_exit_status(int exit_status);
 void	ft_free_arr(char **arr);
 int		ft_check_open(int fd, char *name);
 char	*join_path(char *cmd, char **path, t_list *head_env);
+int		ft_processing(pid_t	*id, t_mshl *data, char **envp);
+int		ft_redir(t_cmd *cmd, t_list *lst);
+void	ft_dup_fd(int i, int **fd, t_mshl *data);
 #endif

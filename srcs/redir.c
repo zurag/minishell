@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:19:23 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 14:53:11 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 15:33:07 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	heredoc(t_cmd *cmd, const char *end_file)
 static void	ft_check_fd(t_cmd *cmd, t_redir	**rd, t_list *lst)
 {
 	*rd = lst->content;
-	if ((*rd)->mode == MODE_READ || MODE_HEREDOC)
+	if ((*rd)->mode == MODE_READ || (*rd)->mode == MODE_HEREDOC)
 	{
 		if (cmd->in_file)
 			close(cmd->in_file);
