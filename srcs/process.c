@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:18:29 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 17:48:25 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 18:08:11 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ void	ft_close_fd(int *fd[2], t_mshl *data)
 	{
 		close(fd[i][0]);
 		close(fd[i][1]);
+		i++;
+	}
+	i = 0;
+	while (i < data->count_cmd - 1)
+	{
+		free(fd[i]);
 		i++;
 	}
 	free(fd);
