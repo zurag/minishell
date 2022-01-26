@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 16:39:22 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 16:28:54 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 18:14:36 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,11 @@ int	executor(t_mshl *data, char **envp)
 	else
 	{
 		if (cmd_with_path(data, envp, path) == -1)
+		{
+			// ft_free_arr(path);
+			// ft_free_arr(envp);
 			return (-1);
+		}
 		id = malloc(sizeof(pid_t) * data->count_cmd);
 		ft_processing(id, data, envp);
 		free(id);

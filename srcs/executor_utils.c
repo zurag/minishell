@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:37:11 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 12:08:15 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 18:19:01 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@ void	ft_free_arr(char **arr)
 	free(arr);
 }
 
-static char	*error_path(t_list *head_env, char *command)
+static char	*error_path(t_list *head_env, char *command, char *tmp, char *cmd)
 {
 	ft_putenv(&head_env, "?", "127");
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	free(command);
+	free(tmp);
+	free(cmd);
 	return (NULL);
 }
 
@@ -70,7 +72,7 @@ char	*join_path(char *cmd, char **path, t_list *head_env)
 		i++;
 	}
 	if (path[i] == NULL)
-		return (error_path(head_env, command));
+		return (error_path(head_env, command, tmp, cmd));
 	free(command);
 	free(tmp);
 	return (cmd);
