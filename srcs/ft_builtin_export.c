@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_export.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 22:20:17 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 22:30:24 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/26 14:22:10 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ int	add_value(char *name, t_mshl *d, int num_cmd, int i)
 		else
 		{
 			ft_putstr_fd("export: \'", 2);
-			ft_putstr_fd(d->cmd[num_cmd].arguments[i], 2);
+			ft_putstr_fd(value, 2);
 			ft_putstr_fd("\': not a valid identifier\n", 2);
 			ft_print_error(&d->head_env, NULL, 1);
+			free(value);
 			return (-1);
 		}
 		free(value);

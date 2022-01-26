@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtentaco <dtentaco@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: dtentaco <dtentaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 16:36:37 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/25 22:34:54 by dtentaco         ###   ########.fr       */
+/*   Updated: 2022/01/26 13:58:31 by dtentaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ char	*get_value_env(char *s)
 
 	temp = NULL;
 	i = 0;
+	if (!s)
+	{
+		temp = (char *)ft_calloc(1, sizeof(char));
+		return (temp);
+	}
 	while (s[i] != '=' && s[i])
 		i++;
 	if (s[i] == '=')
