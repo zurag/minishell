@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 14:39:55 by dtentaco          #+#    #+#             */
-/*   Updated: 2022/01/26 15:35:10 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 15:53:34 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	ft_run_prompt(t_mshl *data)
 			free(line_read);
 			continue ;
 		}
+		print_mini(data);
 		env = list2mass_env(data->head_env);
 		executor(data, env);
 		free_mshl(data);

@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:58:32 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 15:31:10 by zurag            ###   ########.fr       */
+/*   Updated: 2022/01/26 15:48:13 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,25 @@ static	int	check_empty_line(char *line)
 	return (0);
 }
 
-static int	print_quotes_er(char quotes)
+static char	*print_quotes_er(char quotes)
 {
 	if (quotes == '\'')
 		ft_putstr_fd("minishell: unclosed single quote error\n", 2);
 	else
 		ft_putstr_fd("minishell: unclosed double quote error\n", 2);
-	return (-1);
+	return (NULL);
 }
 
-static int	print_er(char *error)
+static char	*print_er(char *error)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd("\n", 2);
-	return (-1);
+	return (NULL);
 }
 
-static int	ft_check_sign(char **str, char quotes, int count_cmd)
+static char	*ft_check_sign(char *line, char quotes, int *count_cmd)
 {
-	char	*line;
-
-	line = *str;
 	if (*line == '\'' || *line == '\"')
 	{
 		quotes = *line;
@@ -59,14 +56,14 @@ static int	ft_check_sign(char **str, char quotes, int count_cmd)
 	}
 	if (*line == '|')
 	{
-		count_cmd++;
+		(*count_cmd)++;
 		line++;
 		if (*line == '|')
 			return (print_er("`|'"));
 	}
 	else
 		line++;
-	return (count_cmd);
+	return (line);
 }
 
 int	pre_parse(char *line)
@@ -80,9 +77,14 @@ int	pre_parse(char *line)
 	while (*line)
 	{
 		quotes = '0';
-		ft_check_sign(&line, quotes, count_cmd);
+		line = ft_check_sign(line, quotes, &count_cmd);
+		if (!line)
+			return (-1);
 	}
 	if (*(line - 1) == '|' || *(line - 1) == '<' || *(line - 1) == '>')
-		return (print_er("`newline'"));
+	{
+		print_er("`newline'");
+		return (-1);
+	}
 	return (count_cmd);
 }
