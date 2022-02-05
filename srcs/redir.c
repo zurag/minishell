@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:19:23 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 20:57:57 by zurag            ###   ########.fr       */
+/*   Updated: 2022/02/05 16:53:52 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,22 +83,15 @@ int	ft_redir(t_cmd *cmd, t_list *lst)
 	{
 		ft_check_fd(cmd, &rd, lst);
 		if (rd->mode == MODE_READ)
-		{
 			cmd->in_file = open(rd->name, O_RDONLY);
-			return (ft_check_open(cmd->in_file, rd->name));
-		}
 		else if (rd->mode == MODE_WRITE)
-		{
 			cmd->out_file = open(rd->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			return (ft_check_open(cmd->out_file, rd->name));
-		}
 		else if (rd->mode == MODE_APPEND)
-		{
 			cmd->out_file = open(rd->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			return (ft_check_open(cmd->out_file, rd->name));
-		}
 		else if (rd->mode == MODE_HEREDOC)
 			heredoc(cmd, rd->name);
+		if (ft_check_open(cmd->in_file, rd->name) || ft_check_open(cmd->out_file, rd->name))
+			return (1);
 		lst = lst->next;
 	}
 	return (0);
@@ -114,9 +107,9 @@ void	ft_init_file(t_list *lst, t_cmd *cmd, t_mshl *data)
 	redir = malloc(sizeof(t_redir));
 	lst->next->content = parse_line(lst->next->content, data);
 	file = lst->next->content;
-	if (!ft_strncmp(lst->content, "<<", 2))
+	if (!ft_strncmp(lst->content, "<<", 3))
 		redir->mode = MODE_HEREDOC;
-	else if (!ft_strncmp(lst->content, ">>", 2))
+	else if (!ft_strncmp(lst->content, ">>", 3))
 		redir->mode = MODE_APPEND;
 	else if (!ft_strncmp(lst->content, ">", 2))
 		redir->mode = MODE_WRITE;

@@ -6,7 +6,7 @@
 /*   By: zurag <zurag@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 10:37:11 by zurag             #+#    #+#             */
-/*   Updated: 2022/01/26 18:22:21 by zurag            ###   ########.fr       */
+/*   Updated: 2022/02/05 16:54:32 by zurag            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*join_path(char *cmd, char **path, t_list *head_env)
 	i = 0;
 	if (!cmd)
 		return (NULL);
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	command = ft_strdup(cmd);
 	tmp = ft_strjoin("/", cmd);
